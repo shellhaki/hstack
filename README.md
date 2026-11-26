@@ -49,6 +49,7 @@ Frontier tokens cost far more than small-model tokens, and the expensive part of
 | [`hstack-swarm`](skills/hstack-swarm/SKILL.md) | skill, `/hstack-swarm` | Parallel workers on independent parts, then an independent reviewer |
 | [`hstack-ui`](skills/hstack-ui/SKILL.md) | skill, `/hstack-ui` | UI work from real references: a design system first, then pages built only from it, reviewed by screenshot |
 | [`hstack-motion`](skills/hstack-motion/SKILL.md) | skill, `/hstack-motion` | Motion-graphics videos from a prompt or a codebase: storyboard first, scenes built in Remotion from a starter kit, voice and sound timed to words, reviewed as stills |
+| [`hstack-update`](skills/hstack-update/SKILL.md) | skill, `/hstack-update` | Updates hstack to the latest skills and sub-agents in every harness it is installed in, and lists the skill versions that changed |
 | [`hstack-research`](skills/hstack-research/SKILL.md) | skill, `/hstack-research` | Market and technical research: workers read the web and write sourced notes, the frontier writes one report with a recommendation |
 | [`hstack` guides](skills/hstack/ROUTES.md) | worker guides | How the worker thinks, read one at a time from a routing table: understand, explore, plan, sources, focus, verify, escalate, plus practice, debug and refactor |
 | [`hstack-worker`](agents/hstack-worker.md) | sub-agent | Plans, then builds and reports, in two phases |
