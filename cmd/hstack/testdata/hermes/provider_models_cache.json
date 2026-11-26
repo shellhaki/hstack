@@ -1,0 +1,12 @@
+{
+  "meta-ai": {
+    "fp": "test",
+    "at": 1795250880.0,
+    "models": ["muse-ember-1.0", "muse-wonder-1.0", "sam-3.1", "muse-spark-1.3-contributor", "muse-spark-1.3", "muse-spark-1.2-contributor", "muse-spark-1.2", "muse-spark-1.1"]
+  },
+  "nous": {
+    "fp": "test",
+    "at": 1792406291.0,
+    "models": ["openai/gpt-6-luna-pro", "muse-spark-1.3"]
+  }
+}

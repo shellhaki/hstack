@@ -47,4 +47,12 @@ Same steps, with `muse.workflow` (see "Delegation by harness" in `hstack`):
 ## In Codex
 - **Parts and review:** spawn `hstack_worker` per part, in parallel, with `model: "<worker id>"`, and `hstack_reviewer` on the worker model for review, as in `hstack` ("Delegation by harness").
 
+## In Hermes Agent
+Same steps, as separate `hermes chat` processes (see "Delegation by harness" in `hstack`):
+- **Plan and part 0:** one process with the split instruction, then a new process reading `.hstack/work/PLAN.md` for part 0. Paste the previous report inline; there are no result refs.
+- **Fan out:** one `hermes chat -m "<worker id>" --in <part-workdir>` process per part, in parallel and in the background, each with its part's instructions above. Use `-w` when the parts need isolated worktrees.
+- **Review:** one process whose prompt starts with "Follow `<home>/agents/hstack-reviewer.md` as your instructions."
+- **Fix:** a new process per affected part, with the defect lines and the exact corrections.
+- **Merge:** bring each part's changes into your checkout, then run the full done commands once.
+
 Cost note: every part's tokens are at the worker's price. Your share is the brief, approvals and reviews. Keep the parts truly independent, so you never have to mediate conflicts.

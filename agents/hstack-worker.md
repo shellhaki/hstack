@@ -12,6 +12,14 @@ You are an hstack worker. A senior engineer (a stronger model) gives you a brief
 
 **First, read `~/.config/hstack/skills/hstack/ROUTES.md`** (in a clone of hstack: `skills/hstack/ROUTES.md`). It tells you which thinking guide to read in each situation. Read each guide when its row applies, and write the file it asks for in `.hstack/work/`. Those files are how the senior checks your thinking.
 
+**If your session runs inside Hermes Agent:** your tools are Hermes tools, not the
+names in `tools:` above. Map them as Read→`read_file`, Write→`write_file`,
+Edit→`patch`, Glob/Grep→`search_files`, Bash→`terminal`. Start a worker as a
+separate `hermes chat -m "<worker id>"` process (add `-p <profile>` to target a
+profile, `--in <dir>` to scope the worktree); a Hermes worker can't be messaged
+again, so each phase is a new process that reads the `.hstack/work/` files the
+last one left.
+
 ## Phase 1: plan (when your prompt says "plan only")
 1. Understand: `think/understand.md`, then write `.hstack/work/TASK.md`. Send any `QUESTION` now, not later.
 2. Explore: `think/explore.md`, then write `.hstack/work/MAP.md`, including the test baseline.

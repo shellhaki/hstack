@@ -111,6 +111,7 @@ func TestAgentForModel(t *testing.T) {
 		"codex-auto-review": "codex",
 		"muse-spark-1.3":    "muse",
 		"claude-haiku-5-5":  "claude",
+		"hermes-3-405b":     "hermes",
 	}
 	for id, want := range cases {
 		got, err := agentForModel(id)
@@ -141,6 +142,59 @@ func TestModelListLiveCodexMergesBuiltInAliases(t *testing.T) {
 	}
 	if list.Rows[1].Alias != "terra-5.6" {
 		t.Fatalf("terra alias = %q", list.Rows[1].Alias)
+	}
+}
+
+func TestModelListLiveHermesOrderAndNotes(t *testing.T) {
+	home := t.TempDir()
+	t.Setenv("HERMES_HOME", home)
+	copyFile(t, "testdata/hermes/provider_models_cache.json", filepath.Join(home, "provider_models_cache.json"))
+	list, err := modelList("hermes")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !strings.HasPrefix(list.Source, "live ") {
+		t.Fatalf("source = %q, want live", list.Source)
+	}
+	if list.OrderNote != liveNoteHermes {
+		t.Fatalf("order note = %q", list.OrderNote)
+	}
+	// Built-in ranking wins for known ids even though the live cache lists
+	// ember before wonder; unknown live models rank after, alphabetically.
+	want := []string{
+		"muse-wonder-1.0", "muse-ember-1.0",
+		"muse-spark-1.3", "muse-spark-1.3-contributor",
+		"muse-spark-1.2", "muse-spark-1.2-contributor",
+		"muse-spark-1.1",
+		"openai/gpt-6-luna-pro", "sam-3.1",
+	}
+	if got := ids(list.Rows); !reflect.DeepEqual(got, want) {
+		t.Fatalf("ids = %v, want %v", got, want)
+	}
+	if list.Rows[0].Alias != "wonder" {
+		t.Fatalf("wonder alias = %q", list.Rows[0].Alias)
+	}
+	if list.Rows[1].Alias != "ember" {
+		t.Fatalf("ember alias = %q", list.Rows[1].Alias)
+	}
+}
+
+func TestModelListHermesFallsBackToBuiltIn(t *testing.T) {
+	t.Setenv("HERMES_HOME", t.TempDir())
+	list, err := modelList("hermes")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if list.Source != "built-in list" {
+		t.Fatalf("source = %q", list.Source)
+	}
+	if got, want := ids(list.Rows), []string{
+		"muse-wonder-1.0", "muse-ember-1.0",
+		"muse-spark-1.3", "muse-spark-1.3-contributor",
+		"muse-spark-1.2", "muse-spark-1.2-contributor",
+		"muse-spark-1.1",
+	}; !reflect.DeepEqual(got, want) {
+		t.Fatalf("fallback ids = %v", got)
 	}
 }
 

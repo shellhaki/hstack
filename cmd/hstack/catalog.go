@@ -39,8 +39,9 @@ type liveItem struct {
 }
 
 const (
-	liveNoteMuse  = "Order: built-in ranking for known models, price for new ones."
-	liveNoteCodex = "Order: built-in ranking for known models, Codex priority for new ones."
+	liveNoteMuse   = "Order: built-in ranking for known models, price for new ones."
+	liveNoteCodex  = "Order: built-in ranking for known models, Codex priority for new ones."
+	liveNoteHermes = "Order: built-in ranking for known models, live Hermes provider cache for new ones."
 )
 
 // codexModelsCache is the part of $CODEX_HOME/models_cache.json that hstack reads.
@@ -78,8 +79,10 @@ func agentForModel(id string) (string, error) {
 		return "muse", nil
 	case strings.HasPrefix(id, "gpt-"), strings.HasPrefix(id, "codex-"):
 		return "codex", nil
+	case strings.HasPrefix(id, "hermes-"):
+		return "hermes", nil
 	}
-	return "", fmt.Errorf("can't tell the harness from %q (use --agent claude, muse or codex)", id)
+	return "", fmt.Errorf("can't tell the harness from %q (use --agent claude, muse, codex or hermes)", id)
 }
 
 // readCodexCatalog lists the user-selectable models ("list") in the Codex cache.
@@ -251,6 +254,9 @@ func mergeStatic(rows []Row, ml *ModelList) {
 	}
 	for i := range rows {
 		if m, ok := known[rows[i].ID]; ok {
+			if rows[i].Name == "" || rows[i].Name == rows[i].ID {
+				rows[i].Name = m.Name
+			}
 			rows[i].Alias = m.Alias
 			rows[i].Note = m.Note
 		}
@@ -286,6 +292,13 @@ func modelList(agent string) (modelListing, error) {
 			rows = orderLive(items, ids, museLess)
 			out.Source = "live " + strings.Join(used, ", ")
 			out.OrderNote = liveNoteMuse
+		}
+	case "hermes":
+		items, used, err := readHermesCatalog(hermesHome())
+		if err == nil && len(items) > 0 {
+			rows = orderLive(items, ids, hermesLess)
+			out.Source = "live " + used
+			out.OrderNote = liveNoteHermes
 		}
 	}
 	if out.Source != "" {

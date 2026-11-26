@@ -15,7 +15,7 @@ Measured result: on a production waitlist backend, Opus directing a Haiku worker
 ## Turning it on (first `/hstack` in a session)
 Do this once per session, before any task. If a worker is already set in this session, skip it.
 
-1. **Get the frontier and its model list.** The frontier is the model running this session; your system prompt or status line names it (for example `claude-opus-5-5`, `muse-spark-1.3-contributor` or `gpt-6-luna`). Run `hstack models --frontier <frontier id> --json`. The harness is picked from the id's prefix (`claude-*`, `muse-*`, `gpt-*`/`codex-*`). The output is the harness's own live list, most to least capable, as `[{id, name, alias, note, rank}]`; the stderr line `source:` says whether it came from the local catalog or the built-in list. Models with the same `rank` are one tier: a `-contributor` variant shares its base's rank, so neither is ever a worker for the other. A higher `rank` is a smaller model. If `hstack` isn't on PATH or the command fails, read `<home>/models/<agent>.json` instead (`<home>` is `~/.config/hstack` or this repo) and match by `id`, `alias` or `names`. Never offer another harness's models.
+1. **Get the frontier and its model list.** The frontier is the model running this session; your system prompt or status line names it (for example `claude-opus-5-5`, `muse-spark-1.3-contributor` or `gpt-6-luna`). Run `hstack models --frontier <frontier id> --json`. The harness is picked from the id's prefix (`claude-*`, `muse-*`, `gpt-*`/`codex-*`, `hermes-*`). **In Hermes always pass `--agent hermes`:** its model ids overlap other harnesses (e.g. `muse-spark-1.3` is served by both Muse and Hermes), so the prefix alone can't pick the harness. The output is the harness's own live list, most to least capable, as `[{id, name, alias, note, rank}]`; the stderr line `source:` says whether it came from the local catalog or the built-in list. Models with the same `rank` are one tier: a `-contributor` variant shares its base's rank, so neither is ever a worker for the other. A higher `rank` is a smaller model. If `hstack` isn't on PATH or the command fails, read `<home>/models/<agent>.json` instead (`<home>` is `~/.config/hstack` or this repo) and match by `id`, `alias` or `names`. Never offer another harness's models.
    - **Frontier not in the list:** don't refuse. Say one line, "hstack doesn't see <frontier> in its list. Models: <aliases, most to least capable>.", and let the user name any model they say is smaller.
 
 2. **Smallest model already?** If the frontier is in the list and no model has a higher rank than its rank, reply in one line, "hstack inactive: <model> is already the smallest, so I'll work normally.", and stop.
@@ -28,7 +28,7 @@ Do this once per session, before any task. If a worker is already set in this se
    - **Not smaller than the frontier** (both in the list, same or higher rank): reply "<model> isn't smaller than <frontier>, pick one of: <aliases below>", then ask again.
    - Repeat until it's valid. Don't guess for the user.
 
-5. **Confirm and remember.** Reply in one line: `hstack active · <frontier> directs, <worker> builds (/hstack-swarm for parallel workers)`. Keep the worker for the rest of the session. In Claude Code pass its `alias` as the Agent tool's `model`; in Muse Code pass its `id` as the `model` of `agent()` in `muse.workflow`; in Codex pass its `id` as the spawn model.
+5. **Confirm and remember.** Reply in one line: `hstack active · <frontier> directs, <worker> builds (/hstack-swarm for parallel workers)`. Keep the worker for the rest of the session. In Claude Code pass its `alias` as the Agent tool's `model`; in Muse Code pass its `id` as the `model` of `agent()` in `muse.workflow`; in Codex pass its `id` as the spawn model; in Hermes start a separate `hermes chat -m "<worker id>"` process for the worker (same shape as Muse below).
 
 Then continue with the task the user gave, if any.
 
@@ -107,9 +107,11 @@ Use `isolation: true` only for parallel work (see `hstack-swarm`); a single work
 
 **Codex.** Ask Codex to spawn the custom agent `hstack_worker` with `model: "<worker id>"` and the brief as its task, with "Phase 1: plan only." Send APPROVE, REVISE and corrections as follow-up input to the same agent thread, so it keeps its context. The reviewer is `hstack_reviewer`.
 
+**Hermes Agent.** Start the worker as a separate `hermes chat` process on the worker model: `hermes chat -m "<worker id>"` (`-p <profile>` to target a profile, `--in <dir>` to scope the worktree, `-s hstack` to preload this skill), with an input that starts with "Follow `<home>/agents/hstack-worker.md` as your instructions." followed by the brief. A Hermes worker can't be messaged again, so each step is a new process that reads the files the last one left (same shape as Muse Code above: plan process, then a build process reading `.hstack/work/PLAN.md`, then a correction process). Paste the previous report inline: Hermes has no result refs. Use `-w` only for parallel work (see `hstack-swarm`); a single worker shares your checkout.
+
 ## Token discipline
 - Never read whole diffs or logs. Trust the worker's tests and spot-check your risk areas.
-- Keep one worker per task and continue it (Claude Code: SendMessage; Muse Code: a new child that reads `.hstack/work/` and the last result), so you don't re-explain.
+- Keep one worker per task and continue it (Claude Code: SendMessage; Muse Code: a new child that reads `.hstack/work/` and the last result; Hermes: a new `hermes chat` process that reads `.hstack/work/` and the last report), so you don't re-explain.
 - Keep briefs and directives short. Exact examples beat explanations.
 
 ## Risks and mitigations

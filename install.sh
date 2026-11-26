@@ -1,13 +1,17 @@
 #!/usr/bin/env bash
-# Install hstack from a clone, for Claude Code, Muse Code or Codex.
+# Install hstack from a clone, for Claude Code, Muse Code, Codex or Hermes Agent.
 #   Claude Code: links skills into ~/.claude/skills and sub-agents into ~/.claude/agents.
 #   Muse Code:   links skills into ~/.agents/skills (Muse workers read agents/*.md from this clone).
 #   Codex:       links skills into ~/.agents/skills. Codex sub-agents are generated TOML files,
 #                which only the Go installer writes: run `hstack install --agent codex`.
+#   Hermes:      links skills into $HERMES_HOME/skills (default ~/.hermes/skills; set HERMES_HOME
+#                to target a profile). The worker is a separate `hermes chat` process, so there
+#                are no sub-agent files to write.
 # The worker model is chosen inside a session, with /hstack.
 # Usage: ./install.sh [claude-config-dir]     (default: ~/.claude)
 #        HSTACK_AGENT=muse ./install.sh
 #        HSTACK_AGENT=codex ./install.sh
+#        HSTACK_AGENT=hermes ./install.sh
 set -euo pipefail
 
 HERE=$(cd "$(dirname "$0")" && pwd)
@@ -55,8 +59,15 @@ case "$AGENT" in
     echo "  they are generated TOML in \${CODEX_HOME:-~/.codex}/agents. Write them with: hstack install --agent codex"
     echo "Done. In Codex, on your frontier model, run /hstack."
     ;;
+  hermes)
+    BASE=${HERMES_HOME:-$HOME/.hermes}
+    mkdir -p "$BASE/skills"
+    prune "$BASE/skills"
+    for skill in "$HERE"/skills/*/; do link "${skill%/}" "$BASE/skills/$(basename "$skill")"; done
+    echo "Done. In Hermes Agent, on your frontier model, run /hstack (the worker is a separate \`hermes chat\` process)."
+    ;;
   *)
-    echo "unknown HSTACK_AGENT=$AGENT (use claude, muse or codex)" >&2
+    echo "unknown HSTACK_AGENT=$AGENT (use claude, muse, codex or hermes)" >&2
     exit 1
     ;;
 esac

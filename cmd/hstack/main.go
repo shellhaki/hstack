@@ -1,8 +1,8 @@
-// Command hstack installs hstack for Claude Code, Muse Code or Codex: the skills (hstack,
+// Command hstack installs hstack for Claude Code, Muse Code, Codex or Hermes Agent: the skills (hstack,
 // hstack-swarm, hstack-ui, hstack-motion, hstack-research) and the worker sub-agents (hstack-worker, hstack-reviewer).
 //
 //	hstack            install for Claude Code (same as `hstack install`)
-//	hstack install    [--agent claude|muse|codex]
+//	hstack install    [--agent claude|muse|codex|hermes]
 //	hstack models     show the model list used to validate workers (live from the harness's catalog when it has one)
 //	hstack status     show the saved setup
 //	hstack uninstall  remove the installed links and setup
@@ -67,6 +67,13 @@ func agentsHome() string { return filepath.Join(home(), ".agents") }
 
 // skillTargets lists where an agent loads skills and sub-agents from.
 func skillTargets(agent string) (skills string, agents string) {
+	if agent == "hermes" {
+		// Hermes has no sub-agent files: a worker is a separate `hermes chat`
+		// process whose prompt points at <home>/agents/hstack-worker.md.
+		// $HERMES_HOME covers profiles: `hermes -p <profile>` points it at
+		// the profile's home.
+		return filepath.Join(hermesHome(), "skills"), ""
+	}
 	if agent == "muse" || agent == "codex" {
 		// Muse has no sub-agent files: its workers read <home>/agents/*.md as instructions.
 		// Codex sub-agents are TOML files written by installCodexAgents instead of links.
@@ -171,12 +178,12 @@ func install(agent string) error {
 
 func cmdInstall(args []string) error {
 	fl := flag.NewFlagSet("install", flag.ExitOnError)
-	agent := fl.String("agent", "claude", "harness: claude (Claude Code), muse (Muse Code) or codex (Codex)")
+	agent := fl.String("agent", "claude", "harness: claude (Claude Code), muse (Muse Code), codex (Codex) or hermes (Hermes Agent)")
 	_ = fl.Parse(args)
 
-	names := map[string]string{"claude": "Claude Code", "muse": "Muse Code", "codex": "Codex"}
+	names := map[string]string{"claude": "Claude Code", "muse": "Muse Code", "codex": "Codex", "hermes": "Hermes Agent"}
 	if names[*agent] == "" {
-		return fmt.Errorf("unknown --agent %q (use claude, muse or codex)", *agent)
+		return fmt.Errorf("unknown --agent %q (use claude, muse, codex or hermes)", *agent)
 	}
 	fmt.Println(bold("hstack") + dim("  small models do the work, frontier models direct it"))
 	fmt.Println("Installing for " + names[*agent])
@@ -199,8 +206,8 @@ func cmdInstall(args []string) error {
 
 func cmdModels(args []string) error {
 	fl := flag.NewFlagSet("models", flag.ContinueOnError)
-	agent := fl.String("agent", "", "harness: claude, muse or codex (default: the one saved by install)")
-	frontier := fl.String("frontier", "", "the session's model id; picks the harness by its prefix when --agent is not set")
+	agent := fl.String("agent", "", "harness: claude, muse, codex or hermes (default: the one saved by install)")
+	frontier := fl.String("frontier", "", "the session's model id; picks the harness by its prefix when --agent is not set (in Hermes always pass --agent hermes: its model ids overlap other harnesses)")
 	asJSON := fl.Bool("json", false, "print [{id, name, alias, note, rank}], most to least capable")
 	if err := fl.Parse(args); err != nil {
 		return err
@@ -224,8 +231,8 @@ func cmdModels(args []string) error {
 			}
 		}
 	}
-	if a != "claude" && a != "muse" && a != "codex" {
-		return fmt.Errorf("unknown agent %q (use claude, muse or codex)", a)
+	if a != "claude" && a != "muse" && a != "codex" && a != "hermes" {
+		return fmt.Errorf("unknown agent %q (use claude, muse, codex or hermes)", a)
 	}
 	list, err := modelList(a)
 	if err != nil {
@@ -267,7 +274,7 @@ func cmdStatus() error {
 
 func cmdUninstall() error {
 	targets := map[string][]string{
-		"skills": {filepath.Join(claudeHome(), "skills"), filepath.Join(agentsHome(), "skills")},
+		"skills": {filepath.Join(claudeHome(), "skills"), filepath.Join(agentsHome(), "skills"), filepath.Join(hermesHome(), "skills")},
 		"agents": {filepath.Join(claudeHome(), "agents")},
 	}
 	for sub, dirs := range targets {
@@ -313,7 +320,7 @@ func main() {
 	case "version", "--version":
 		fmt.Println("hstack", version)
 	case "help", "-h", "--help":
-		fmt.Println("usage: hstack [install [--agent claude|muse|codex]|models [--agent claude|muse|codex] [--frontier <model id>] [--json]|status|uninstall|version]")
+		fmt.Println("usage: hstack [install [--agent claude|muse|codex|hermes]|models [--agent claude|muse|codex|hermes] [--frontier <model id>] [--json]|status|uninstall|version]")
 	default:
 		err = fmt.Errorf("unknown command %q (try: hstack help)", cmd)
 	}
