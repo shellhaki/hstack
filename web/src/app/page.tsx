@@ -6,6 +6,7 @@ import { HeroFloat } from "@/components/hero-float";
 import { GitHubMark, Nav } from "@/components/nav";
 import { ProductWindow } from "@/components/product-window";
 import { HowWalkthrough } from "@/components/how-walkthrough";
+import { InstallTerminal } from "@/components/install-terminal";
 import { SkillDemos } from "@/components/skill-demos";
 import { BENCHMARK, GITHUB, HISTORY, INSTALL_CMD, INSTALL_FROM_SOURCE } from "@/lib/site";
 
@@ -147,23 +148,7 @@ export default function Home() {
               <h2 className={h2}>Don&apos;t trust the numbers? Run them.</h2>
             </div>
             <div className="grid gap-4 lg:grid-cols-2">
-              <div className="tile flex min-w-0 flex-col">
-                <div className="flex items-center gap-1.5 border-b border-line px-4 py-3" aria-hidden>
-                  <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
-                  <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
-                  <span className="h-2.5 w-2.5 rounded-full bg-white/15" />
-                  <span className="ml-3 font-mono text-xs text-ink-3">~/code</span>
-                </div>
-                <div className="flex-1 overflow-x-auto p-5 font-mono text-[13px] leading-7">
-                  <div className="whitespace-nowrap"><span className="text-frontier">$</span> {INSTALL_CMD}</div>
-                  <div className="whitespace-nowrap text-ink-3">✓ linked 4 skills and 2 sub-agents into ~/.claude</div>
-                  <div className="whitespace-nowrap"><span className="text-frontier">$</span> claude --model opus</div>
-                  <div className="whitespace-nowrap"><span className="text-frontier">&gt;</span> /hstack-activate</div>
-                  <div className="whitespace-nowrap text-ink-3">Which smaller model should do the work? <span className="text-ink">haiku 5.5</span></div>
-                  <div className="whitespace-nowrap text-ink-3">hstack active · <span className="text-frontier">opus</span> directs, <span className="text-small">haiku</span> builds</div>
-                  <div><span className="text-frontier">&gt;</span><span className="caret" /></div>
-                </div>
-              </div>
+              <InstallTerminal />
               <div className="tile flex min-w-0 flex-col justify-between gap-8 p-6 sm:p-8">
                 <ul className="flex flex-col gap-5">
                   {openPoints.map((p) => (
