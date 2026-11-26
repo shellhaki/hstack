@@ -5,11 +5,15 @@ Take frames at rest, mid-animation and mid-transition (`tools/stills.sh`). Frame
 one before the composition's length (Remotion prints the length on an out-of-range frame).
 
 ## Checklist
-- [ ] Follows the approved storyboard, scene by scene; nothing invented.
+- [ ] Follows the approved direction and storyboard, scene by scene; no invented facts.
+- [ ] Original: none of the defaults in `guides/direction.md` without the reason the storyboard gives;
+      no kit example scene with swapped content; no sample-script line. Would this sheet be mistaken
+      for another product's video? If yes, it fails.
+- [ ] Fills the frame: the subject is large, UI is cropped and scaled up, no shot mostly empty.
 - [ ] Every element is inside the frame and nothing overlaps by accident (long text in bubbles wraps).
 - [ ] At most two lines of text on screen; every word readable at phone size.
 - [ ] The brand color is only fills on light backgrounds; contrast is fine.
-- [ ] Entrances spring and stagger; nothing just fades in; the camera keeps moving.
+- [ ] Motion follows the chosen language; siblings stagger; the camera keeps moving.
 - [ ] Transitions vary and each has a sound.
 - [ ] Motion lands on the spoken word (compare `at()` cues with the voice).
 - [ ] Real product UI, commands and numbers, matching the code; competitor facts dated and sourced.

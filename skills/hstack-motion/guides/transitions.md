@@ -1,6 +1,10 @@
 # Transitions
 
-Scenes never hard-cut and never plain-fade. Each one hands over to the next with a camera move and a
+The direction's motion language decides how scenes hand over: a continuous-camera video has no
+transitions, only camera moves; an editorial one uses few and slow ones; a mechanical one may cut
+hard on a beat. When scenes do hand over, the kit's four are a starting point.
+
+Scenes never plain-fade. Each one hands over to the next with a camera move and a
 sound under it. The kit has four, in `kit/src/transitions.tsx`, used through Remotion's
 `TransitionSeries` with a spring timing of about 20 frames (a third of a second).
 

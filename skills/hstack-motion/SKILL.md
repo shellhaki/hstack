@@ -1,9 +1,9 @@
 ---
 name: hstack-motion
-description: Motion-graphics videos under hstack. Use only when the user invokes /hstack-motion to make a promo, launch, teaser, explainer or product video (YouTube, social, landing-page hero) from a prompt or from a codebase. The worker writes a storyboard and script first, builds scenes in Remotion from a starter kit (springs, slot reels, scene transitions, voice and sound timed to words), and the frontier reviews stills before anything is rendered in full.
-purpose: Launch-quality motion graphics from a small model, with no slideshow fades, no robotic voice and no invented claims.
+description: Motion-graphics videos under hstack. Use only when the user invokes /hstack-motion to make a promo, launch, teaser, explainer or product video (YouTube, social, landing-page hero) from a prompt or from a codebase. The worker writes a storyboard and script first, picks one of three creative directions drawn from the product's own world, writes a storyboard, builds original scenes in Remotion on a kit of primitives (springs, transitions, voice and sound timed to words), and the frontier reviews stills before anything is rendered in full.
+purpose: Launch-quality motion graphics from a small model that look like this product and no other, with no slideshow fades, no robotic voice and no invented claims.
 author: shellhaki
-version: 0.1.1
+version: 0.2.0
 disable-model-invocation: true
 ---
 
@@ -14,16 +14,19 @@ pick the worker, then continue here. The brief, review and token rules of `hstac
 skill adds the video-specific steps.
 
 A video here is code: a [Remotion](https://remotion.dev) project (React, rendered frame by frame to MP4).
-The worker never invents a look, a fact or a timing. Every choice comes from one of four places, and
-anything none of them answers is a `QUESTION`, never a guess:
+Every video must look like its product and no other. The worker invents the **direction** (concept,
+look, motion, structure) from the product's own world, and never invents a **fact**: every claim,
+number, screen and command is real, and anything missing is a `[NEED: …]`.
 
-1. `.hstack/motion/STORYBOARD.md`: the story, scene by scene, with the script line for each.
-2. The product itself: its real UI tokens, real commands and output, real prices
+1. `.hstack/motion/STORYBOARD.md`: the approved direction and the scenes.
+2. The product itself: its real UI tokens, copy, commands, output and prices
    (`guides/from-codebase.md`), or the user's prompt when there is no codebase.
-3. The starter kit in `<skill>/kit/`: the stage, springs, typed lines, slot reels, slams,
-   transitions, and voice and sound timed to words. **Never hand-roll what the kit has.**
-4. The guides: `guides/motion.md` (how things move), `guides/transitions.md`,
-   `guides/voice.md`, `guides/sound.md`, `guides/story.md`.
+3. The kit in `<skill>/kit/`: **primitives** (springs, easing, timing to words, transitions, sound,
+   stills) and example scenes that teach techniques. The examples are for reading, never for shipping
+   with new content.
+4. The guides: `guides/direction.md` (choosing the direction, and the defaults to avoid),
+   `guides/story.md`, `guides/motion.md`, `guides/transitions.md`, `guides/voice.md`,
+   `guides/sound.md`.
 
 ## Files in the user's project
 ```
@@ -45,15 +48,16 @@ own components), real commands and what they print, real prices from the code, a
 From a prompt, the same list from the prompt, with every gap as `[NEED: …]`. Prices or claims about
 competitors are checked on the competitors' own sites and footnoted with the date; never from memory.
 
-**2. Storyboard (the most important review).** The worker fills `templates/storyboard.md` following
-`guides/story.md`: length, format (16:9 / 9:16), light or dark, voice or not, then one row per scene
-with the script line, what is on screen, the motion pattern from `guides/motion.md`, the transition
-into it and the sounds. The frontier reviews it against `guides/story.md` (structure, fairness,
-pacing, one idea per scene) and approves it or sends exact fixes.
+**2. Direction (the most important review).** The worker fills the header and DIRECTIONS of
+`templates/storyboard.md` following `guides/direction.md`: three directions that differ in concept and
+structure, a recommendation, and the check against the defaults list. The frontier picks one, or
+asks for new ones if any is close to the kit's sample video or to an earlier video. Then the worker
+fills the scenes for the chosen direction (`guides/story.md`, `guides/motion.md`), and the frontier
+approves them or sends exact fixes.
 
 **3. Set up.** Copy `<skill>/kit` to `video/`, rename its `gitignore` to `.gitignore`, `bun install`
-(Remotion needs ffmpeg on PATH for the voice tempo step), set the brand tokens in
-`video/src/theme.ts` from step 1, and put the logo in `video/public/`. Write the script lines from the
+(Remotion needs ffmpeg on PATH for the voice tempo step), set the brand tokens and the stage
+from the direction in `video/src/theme.ts`, and put the logo in `video/public/`. Write the script lines from the
 storyboard into `video/src/script.ts`.
 
 **4. Voice and sound.** With an ElevenLabs key in `video/.env` (`ELEVENLABS_API_KEY=…`), run
@@ -61,9 +65,12 @@ storyboard into `video/src/script.ts`.
 of every word, so scenes last as long as their line and motion lands on words (`at(id, word)`).
 Without a key, timings are estimated from the text and the video still renders silent.
 
-**5. Build scenes** in `video/src/scenes/`, one component per storyboard row, using only the kit's
-pieces and the patterns in `guides/motion.md`. Register them in `video/src/Root.tsx` with the
-transition the storyboard names. No new colors, fonts or easings outside `theme.ts` and `motion.ts`.
+**5. Build scenes** in `video/src/scenes/`, one component per storyboard row, written for the
+direction. Once you have read what you need, delete `scenes/examples.tsx` and `scenes/patterns.tsx` from
+`video/`, with their imports and the `Gallery` composition in `Root.tsx`: they must not be in the
+final video. Register the scenes in `video/src/Video.tsx` with the
+transitions the storyboard names. Colors, fonts and curves live in `theme.ts` and `motion.ts`; add new
+ones there when the direction needs them.
 
 **6. Verify.** `bunx tsc --noEmit` passes. Then render stills, not the video:
 `bash <skill>/tools/stills.sh video <composition> <frame> <frame> …` writes one contact sheet to
@@ -85,10 +92,13 @@ commands in a terminal window are core patterns of this skill. The monospace fon
 their output only, never for headlines or captions.
 
 ## Rules that prevent slop
-- **Nothing just fades in, and no scene hard-cuts.** Every entrance springs (overshoot and settle),
-  every scene hands over with a camera transition and a sound under it.
+- **Original every time.** Three directions, one chosen; none of the defaults in
+  `guides/direction.md` without a reason; no sample-script line, no example scene with swapped content.
+- **Nothing just appears.** Everything moves in the chosen motion language, and the camera never
+  stops.
 - **Show the product, not stock shapes:** the real UI, real commands, real output, rebuilt as
   components, never screenshots of someone else's product and never invented numbers.
+- **Fill the frame.** Big type, UI cropped and scaled up; nothing tiny in empty space.
 - **One idea per scene, a few words on screen.** The voice says it; the screen shows it.
 - **The voice sounds spoken, not read** (`guides/voice.md`), and lists are read as one phrase.
 - **Competitors are named fairly**, compared like with like, with dated, sourced prices.

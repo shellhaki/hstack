@@ -18,8 +18,8 @@ A narrated video lives or dies on the voice. It must sound like a person talking
 Each script line has the clean `text` (for the screen and for timing) and a `say` (what the voice
 gets), with cues:
 ```ts
-{ id: "copies", text: "Copied, pasted and forgotten.", say: "[fast] Copied, pasted and forgotten." },
-{ id: "compare", text: "Like Infisical? Or Doppler?", say: "[curious][fast] Like Infisical? Or Doppler?" },
+{ id: "<scene>", text: "<the line as written>", say: "[fast] <the same line>" },
+{ id: "<scene>", text: "<a question?>", say: "[curious] <a question?>" },
 ```
 Useful cues: `[warm]`, `[confident]`, `[curious]`, `[excited]`, `[serious]`, `[playful]`, `[fast]`,
 `[sighs]`. Use one or two per line; never `[excited]` on the brand name.

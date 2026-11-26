@@ -2,23 +2,30 @@ import type { CSSProperties, ReactNode } from "react";
 import { AbsoluteFill, Audio, random, Sequence, spring, staticFile, useCurrentFrame } from "remotion";
 import { between, rise } from "./motion";
 import { FPS, s } from "./script";
-import { brand, mono, sans } from "./theme";
+import { brand, mono, sans, stage } from "./theme";
 import type { SfxName } from "./sfx-list";
 import made from "./sfx.json";
 
 // The kit's pieces. Scenes are built from these and from motion.ts; see guides/motion.md.
 
-// Stage is a scene's background: light paper with a faint drifting dot grid, a soft glow of the brand
-// color and a little grain; or the dark stage with `dark`.
-export function Stage({ children, dark = false, glow = true }: { children: ReactNode; dark?: boolean; glow?: boolean }) {
+// Stage is a scene's background, as set in theme.ts `stage` (or `dark` for the dark stage). Pass
+// `background` to override it for one scene.
+const PATTERNS = {
+  dots: (c: string) => ({ backgroundImage: `radial-gradient(${c} 1.4px, transparent 1.6px)`, backgroundSize: "36px 36px" }),
+  grid: (c: string) => ({ backgroundImage: `linear-gradient(${c} 1px, transparent 1px), linear-gradient(90deg, ${c} 1px, transparent 1px)`, backgroundSize: "60px 60px" }),
+  lines: (c: string) => ({ backgroundImage: `linear-gradient(${c} 1px, transparent 1px)`, backgroundSize: "100% 48px" }),
+};
+export function Stage({ children, dark = false, background }: { children: ReactNode; dark?: boolean; background?: string }) {
   const frame = useCurrentFrame();
-  return <AbsoluteFill style={{ background: dark ? brand.night : brand.paper, color: dark ? "#fafafa" : brand.ink, fontFamily: sans, overflow: "hidden" }}>
-    <AbsoluteFill style={{ backgroundImage: `radial-gradient(${dark ? "rgba(255,255,255,.08)" : "rgba(9,9,11,.09)"} 1.4px, transparent 1.6px)`, backgroundSize: "36px 36px", backgroundPosition: `0 ${-frame * 0.3}px`, maskImage: "radial-gradient(ellipse 75% 70% at 50% 50%, black 30%, transparent 80%)" }} />
-    {glow && <AbsoluteFill style={{ background: `radial-gradient(1000px 420px at 50% 100%, ${brand.accent}38, transparent 70%)` }} />}
+  const bg = background ?? (dark ? brand.night : stage.background);
+  const ink = dark ? "rgba(255,255,255,.08)" : "rgba(9,9,11,.09)";
+  return <AbsoluteFill style={{ background: bg, color: dark ? "#fafafa" : stage.text, fontFamily: sans, overflow: "hidden" }}>
+    {stage.pattern !== "none" && <AbsoluteFill style={{ ...PATTERNS[stage.pattern](ink), backgroundPosition: `0 ${-frame * 0.3}px`, maskImage: "radial-gradient(ellipse 75% 70% at 50% 50%, black 30%, transparent 80%)" }} />}
+    {stage.glow && <AbsoluteFill style={{ background: `radial-gradient(1000px 420px at 50% 100%, ${brand.accent}38, transparent 70%)` }} />}
     {children}
-    <AbsoluteFill style={{ opacity: 0.05, mixBlendMode: dark ? "screen" : "multiply", pointerEvents: "none" }}>
+    {stage.grain > 0 && <AbsoluteFill style={{ opacity: stage.grain, mixBlendMode: dark ? "screen" : "multiply", pointerEvents: "none" }}>
       <svg width="100%" height="100%"><filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed={frame % 10} /></filter><rect width="100%" height="100%" filter="url(#grain)" /></svg>
-    </AbsoluteFill>
+    </AbsoluteFill>}
   </AbsoluteFill>;
 }
 
@@ -56,7 +63,7 @@ export function Slam({ word, from, to, size = 190, dark = false }: { word: strin
   const p = rise(frame, from, true);
   const out = between(frame, to - 6, to, 0, 1);
   return <AbsoluteFill style={{ alignItems: "center", justifyContent: "center", pointerEvents: "none" }}>
-    <span style={{ fontSize: size, fontWeight: 800, letterSpacing: "-0.05em", transform: `scale(${1.35 - p * 0.35 + out * 0.2})`, filter: `blur(${(1 - Math.min(1, p)) * 14 + out * 14}px)`, opacity: Math.min(1, p * 1.6) * (1 - out), textShadow: `0 0 60px ${dark ? brand.night : brand.paper}, 0 0 30px ${dark ? brand.night : brand.paper}` }}>{word}</span>
+    <span style={{ fontSize: size, fontWeight: 800, letterSpacing: "-0.05em", transform: `scale(${1.35 - p * 0.35 + out * 0.2})`, filter: `blur(${(1 - Math.min(1, p)) * 14 + out * 14}px)`, opacity: Math.min(1, p * 1.6) * (1 - out), textShadow: `0 0 60px ${dark ? brand.night : stage.background}, 0 0 30px ${dark ? brand.night : stage.background}` }}>{word}</span>
   </AbsoluteFill>;
 }
 

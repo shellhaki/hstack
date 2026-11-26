@@ -11,6 +11,8 @@ import voice from "./voice.json";
 
 export type Line = { id: string; text: string; say?: string; tempo?: number; min: number };
 
+// The lines below are the kit's sample, for the example scenes only. Replace all of them with the
+// storyboard's lines; never reuse their wording.
 export const SCRIPT: Line[] = [
   { id: "intro", text: "Introducing Product.", say: "Introducing Product.", min: 2.6 },
   { id: "nodes", text: "Everything your team needs, in one place.", say: "[warm] Everything your team needs, in one place.", min: 3.6 },

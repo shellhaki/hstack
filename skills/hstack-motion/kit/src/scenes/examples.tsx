@@ -5,8 +5,9 @@ import { Sfx, SLOT_SPIN, SLOT_STAGGER, SlotWord, Stage, typed, TypeLine } from "
 import { at, s } from "../script";
 import { brand, mono } from "../theme";
 
-// Example scenes, one per pattern in guides/motion.md. Copy one, rename it, and change the content to
-// the storyboard's; keep the motion. Each reads its timing from its script line with `at`.
+// Example scenes that teach techniques (guides/motion.md). Read them; don't ship them. A video made
+// of these with new words looks like every other video from this kit. Each reads its timing from its
+// script line with `at`.
 
 // Intro: "Introducing" types, the logo lands with a ring of light, and the name spins in on slot reels.
 export function Intro() {

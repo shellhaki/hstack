@@ -5,9 +5,8 @@ import { Glitchy, Sfx, Shine, Stage, Tilt, typed, Window } from "../kit";
 import { s } from "../script";
 import { brand, mono } from "../theme";
 
-// More example scenes, one per pattern in guides/motion.md. They use fixed timings (s(...)) so they
-// preview on their own in the Gallery composition. When you copy one into a video, time it to its
-// script line with `at(id, word)` instead, like the scenes in examples.tsx.
+// More example scenes that teach techniques (guides/motion.md). Read them; don't ship them. They use
+// fixed timings (s(...)) so they preview on their own in the Gallery composition.
 
 // Chats: "how people do it today". Generic chat windows fill with messages, one ping each.
 // Never draw a real app's logo or UI: the windows stay generic.
