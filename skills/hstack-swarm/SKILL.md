@@ -1,6 +1,6 @@
 ---
 name: hstack-swarm
-description: Solo parallel mode. Use for /hstack-swarm when the work splits into independent parts (separate modules, pages, services or files). The running model plans the split, builds shared contracts first, starts parallel copies of itself on the parts (same model, same hstack guides), has an independent reviewer try to break the result, then merges and verifies. For a frontier directing smaller workers, use /hstack-orchestrator-swarm.
+description: Solo parallel mode. Use for /hstack-swarm when the work splits into independent parts (separate modules, pages, services or files). The running model plans the split, builds shared contracts first, starts parallel copies of itself on the parts (same model, same hstack guides), has an independent reviewer try to break the result, then merges and verifies. For a frontier directing smaller workers, use /hstack-team-swarm.
 purpose: Finish large tasks faster on one model, without letting parallel work skip review.
 author: shellhaki
 version: 1.0.0
@@ -14,7 +14,7 @@ Every part follows the `hstack` guides (`~/.config/hstack/skills/hstack/ROUTES.m
 the parts are truly independent; for one connected change, plain `/hstack` is faster.
 
 ## Steps
-1. **Understand and explore** the whole task yourself (`think/understand.md`, `think/explore.md`):
+1. **Understand and explore** the whole task yourself (`think/understand/SKILL.md`, `think/explore/SKILL.md`):
    `.hstack/work/TASK.md` and the project map `.hstack/MAP.md`.
 
 2. **Plan the split** in `.hstack/work/PLAN.md`: 2–6 parts with **disjoint files**. For each part:
@@ -42,7 +42,7 @@ the parts are truly independent; for one connected change, plain `/hstack` is fa
    and the part's report), or fix it yourself if it is small or crosses parts.
 
 7. **Merge and verify.** Bring every part into your checkout, run the full done commands once, and
-   write `.hstack/work/EVIDENCE.md` (`think/verify.md`). Report to the user as `hstack` says.
+   write `.hstack/work/EVIDENCE.md` (`think/verify/SKILL.md`). Report to the user as `hstack` says.
 
 ## By harness
 - **Claude Code:** the Agent tool with `subagent_type: "hstack-worker"` and **no `model`**, so it
@@ -59,4 +59,4 @@ the parts are truly independent; for one connected change, plain `/hstack` is fa
 
 Cost note: every part runs on your model, so this costs about the same tokens as doing it yourself
 (slightly more for the review). What you buy is time. To also cut cost, use
-`/hstack-orchestrator-swarm` with a smaller worker.
+`/hstack-team-swarm` with a smaller worker.

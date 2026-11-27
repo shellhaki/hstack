@@ -6,14 +6,14 @@
 - **Music:** <file or "user adds later">
 - **Sources:** <files and dated URLs every fact on screen comes from>
 
-## Directions (guides/direction.md)
+## Directions (guides/direction/SKILL.md)
 Three directions that differ in concept and structure. Five lines each.
 
 **A. <name>**
 - Concept: <one line, from the product's own world>
 - Look: <stage, type, color, framing, texture>
 - Motion language: <elastic | mechanical | editorial | physical | continuous camera, and how>
-- Structure: <from guides/story.md>
+- Structure: <from guides/story/SKILL.md>
 - Why it fits: <one line>
 
 **B. …**
@@ -21,7 +21,7 @@ Three directions that differ in concept and structure. Five lines each.
 **C. …**
 
 RECOMMEND: <A, B or C> because <one reason>.
-CHECK: none of the defaults in guides/direction.md appear, or each one has a reason here: <…>
+CHECK: none of the defaults in guides/direction/SKILL.md appear, or each one has a reason here: <…>
 
 ## Scenes (fill only after a direction is approved)
 | # | Scene id | Seconds | Voice line (or none) | On screen | Motion | Into this scene | Sounds |

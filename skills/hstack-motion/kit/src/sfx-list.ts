@@ -1,4 +1,4 @@
-// The sound effects, and the prompt each is generated from with ElevenLabs (bun run sfx). See guides/sound.md.
+// The sound effects, and the prompt each is generated from with ElevenLabs (bun run sfx). See guides/sound/SKILL.md.
 export const SFX = {
   whoosh: { prompt: "Fast, airy, clean whoosh for a modern motion graphics transition, no music", seconds: 1 },
   swoosh: { prompt: "Soft low cinematic swoosh, subtle, short, for a UI panel sliding in", seconds: 1 },

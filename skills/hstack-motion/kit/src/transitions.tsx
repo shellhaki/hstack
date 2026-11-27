@@ -3,7 +3,7 @@ import { AbsoluteFill, interpolate } from "remotion";
 import type { TransitionPresentation, TransitionPresentationComponentProps } from "@remotion/transitions";
 import { brand } from "./theme";
 
-// The scene transitions (guides/transitions.md). Each moves the camera rather than just fading.
+// The scene transitions (guides/transitions/SKILL.md). Each moves the camera rather than just fading.
 
 type Props = TransitionPresentationComponentProps<Record<string, never>> & { children: ReactNode };
 const make = (component: (p: Props) => ReactNode) => (): TransitionPresentation<Record<string, never>> => ({ component, props: {} });

@@ -8,10 +8,24 @@ version: 0.5.0
 
 # hstack-ui
 
+## Non-negotiable
+Every UI task, however small, ends with this checklist in the report, each line with its real output.
+A line you can't fill means the task isn't done:
+```
+DESIGN.md: <path, approved on date> (or: written and approved in this task)
+PREBUILT: node <skill>/tools/check-prebuilt.mjs . → <ok | findings fixed>
+CONTRAST: node <skill>/tools/contrast.mjs <css> → <exit 0>  (only if colors or theme changed)
+SCREENS: <the screenshot files of every changed page; 1440, and 390 for M and up>
+REVIEW: guides/review/SKILL.md run on the screens → <issues found and fixed, or none>
+COPY: checked against vendor/taste-skill/copy-tells.md → <changes>
+```
+Skipping the screenshots because "it's just CSS" is the most common miss: the review is what catches
+broken layouts.
+
 **Two ways to run this skill.**
 - **Alone (`/hstack`, or no hstack mode at all):** you do every step yourself. Where a step says "the
   worker", that is you. Where it says "the frontier reviews", review your own screenshots
-  against `guides/review.md` and fix what fails; ask the user to approve only a new or changed
+  against `guides/review/SKILL.md` and fix what fails; ask the user to approve only a new or changed
   `DESIGN.md`, since every later page depends on it.
 - **Team (`/hstack-team`):** if it isn't on yet, do its "Turning it on" steps to pick the worker, then
   follow the steps as written. The brief, review and token rules of `hstack-team` apply.
@@ -21,15 +35,15 @@ anything none of them answers is a `QUESTION`, never a guess:
 
 1. `.hstack/ui/DESIGN.md`: the project's design system (the look).
 2. Prebuilt components: shadcn/ui on React + Tailwind by default, browsed and installed as
-   `guides/components.md` describes. **Never hand-build a component** that a registry has (button,
+   `guides/components/SKILL.md` describes. **Never hand-build a component** that a registry has (button,
    input, table, dialog, card, menu, sidebar, chart, and the rest); compose pages from installed ones.
 3. A page recipe from `library/recipes.md`: what a page of that kind contains, in what order, and which
    component fits which job.
 
 Motion and imagery follow the same rule: animated backgrounds and animations come from motion
-registries (`guides/motion.md`), smooth scrolling from Lenis where it fits (`guides/scroll.md`),
-colors from palette sources checked by a script (`guides/color.md`), icons from one icon library and logos from the brands themselves
-(`guides/icons.md`), each chosen once in `DESIGN.md`.
+registries (`guides/motion/SKILL.md`), smooth scrolling from Lenis where it fits (`guides/scroll/SKILL.md`),
+colors from palette sources checked by a script (`guides/color/SKILL.md`), icons from one icon library and logos from the brands themselves
+(`guides/icons/SKILL.md`), each chosen once in `DESIGN.md`.
 
 ## Files in the user's project (`.hstack/ui/`)
 ```
@@ -50,7 +64,7 @@ sized S or M (the size table in `hstack`'s `ROUTES.md`): a new section, a restyl
 - **Screenshots: one contact sheet for the whole task,** not one review per page. S: the changed
   pages at 1440 only. M: at 1440 and 390. A plain full-page screenshot is enough (`--no-tiles` skips the section tiles):
   `node <skill>/vendor/taste-skill/shoot.mjs --url <url> --w 1440 --no-tiles --out .hstack/ui/screens/<page>-1440.png --profile .hstack/ui/.chrome`
-- The frontier reviews the sheet once, with `guides/review.md`.
+- The frontier reviews the sheet once, with `guides/review/SKILL.md`.
 
 Use the full loop below only for a new project (no `DESIGN.md`), a redesign, or a change to
 `DESIGN.md` itself.
@@ -65,7 +79,7 @@ Every build brief names `.hstack/ui/DESIGN.md` as its only source of styling.
 even if the user's request only asks for a page.
 
 **1. Principles, not examples.** The design knowledge is already compiled in
-`guides/design-principles.md`: how to choose type, color, layout, imagery, components, motion and
+`guides/design-principles/SKILL.md`: how to choose type, color, layout, imagery, components, motion and
 copy for a product, what never to choose, and the nine sites it was learned from (Linear, Vercel,
 Stripe, Raycast, Resend, Figma, Notion, Supabase, Brimble) as evidence, never as templates. The worker
 reads it in full; no capture is needed.
@@ -85,20 +99,20 @@ another Chromium build, such as Playwright's
 the capture or needs a login, say so; never invent what it looks like.
 
 **3. DESIGN.md (the most important review).** The worker writes it by following
-`guides/writing-design-md.md`: the product lines (trade, mood words, the product's own material,
+`guides/writing-design-md/SKILL.md`: the product lines (trade, mood words, the product's own material,
 light or dark), then each choice with the product line it follows from, then the tokens, filled
 into `templates/design-system.md`'s template. The frontier reviews the text against
-`guides/design-principles.md` and approves it or sends exact fixes before any page is built: a wrong
+`guides/design-principles/SKILL.md` and approves it or sends exact fixes before any page is built: a wrong
 system makes every page wrong. The user can edit `DESIGN.md` at any time; it stays the single source.
 
 **4. Theme (once per project, or after `DESIGN.md` changes).** The worker turns `DESIGN.md`'s tokens into the library's theme variables once
 (`--background`, `--foreground`, `--primary`, `--muted`, `--border`, `--radius`, fonts), then runs
-`node <skill>/tools/contrast.mjs <the css file>`, which must exit 0 (`guides/color.md`).
+`node <skill>/tools/contrast.mjs <the css file>`, which must exit 0 (`guides/color/SKILL.md`).
 
-**5. Build.** Pick the page recipe, find each part in the registry (`guides/components.md`: blocks
+**5. Build.** Pick the page recipe, find each part in the registry (`guides/components/SKILL.md`: blocks
 first, then components), install it with `shadcn add`, and compose the page from installed parts,
 styled only through `DESIGN.md`'s theme. Add the one animated background `DESIGN.md` names
-(`guides/motion.md`) and icons from its icon library (`guides/icons.md`). No new colors, sizes, radii, shadows or fonts, and no
+(`guides/motion/SKILL.md`) and icons from its icon library (`guides/icons/SKILL.md`). No new colors, sizes, radii, shadows or fonts, and no
 hand-built component. Something no registry has, or a pattern `DESIGN.md` doesn't cover, is a
 `QUESTION` to the frontier, answered by adding it to `DESIGN.md` first.
 
@@ -110,14 +124,14 @@ by renaming or hiding the element. Then the worker captures its own pages into `
 and phone), runs the project's checks, and checks its copy against `<skill>/vendor/taste-skill/copy-tells.md`.
 
 **7. Review (frontier).** Review `.hstack/ui/screens/` against `DESIGN.md` using
-`guides/review.md`, including the clone check: no page may read as a copy of a site in the principles, or as an AI default. One correction round
+`guides/review/SKILL.md`, including the clone check: no page may read as a copy of a site in the principles, or as an AI default. One correction round
 with exact fixes (file, element, expected value); then a more specific fix, never a vague "make it nicer".
 
 **8. Done.** Accept, or commit if asked. A later "make it denser" or "more like X" changes `DESIGN.md`
 first, then the pages.
 
 ## Rules that prevent slop
-`guides/anti-slop.md` lists the banned defaults. The short version: one system per project (one radius family,
+`guides/anti-slop/SKILL.md` lists the banned defaults. The short version: one system per project (one radius family,
 one button shape, one spacing scale, one type scale); real content or a clear `[NEED: …]` marker, never
 invented facts, logos or numbers; no emoji as icons; every list and table has empty, loading and error
 states.
@@ -125,4 +139,4 @@ states.
 ## Credits
 The section screenshot script (`shoot.mjs`), the copy tells, the type pairings and the palettes come
 from tasteskill by [Leonxlnx](https://github.com/Leonxlnx/taste-skill) (MIT), vendored unchanged at
-commit `f6b7657`; see `<skill>/vendor/taste-skill/NOTICE.md`. Several rules in `guides/anti-slop.md` are adapted from it.
+commit `f6b7657`; see `<skill>/vendor/taste-skill/NOTICE.md`. Several rules in `guides/anti-slop/SKILL.md` are adapted from it.

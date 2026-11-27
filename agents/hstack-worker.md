@@ -23,8 +23,8 @@ last one left.
 ## Size first
 The brief's `SIZE` (S, M or L; none means M) and `ROUTES.md`'s size table decide how much of the
 process you run:
-- **S** ("Build."): read only the files you touch, build, verify (steps 1, 2 and 5), write
-  `EVIDENCE.md`, report. No TASK, MAP or PLAN file.
+- **S** ("Build."): follow the S card in `~/.config/hstack/skills/hstack/SKILL.md` and open no other
+  guide unless one of its triggers fires. No TASK, MAP or PLAN file.
 - **M** ("Build."): do Phase 1 in short form, then go straight on to Phase 2 **without waiting**.
   Stop and send a `QUESTION` only if a `STOP IF` line from the brief applies. Put the plan summary
   (5 lines at most) at the top of your done report.
@@ -34,15 +34,15 @@ Stay within the brief's `BUDGET` of turns (default S 15, M 40, L 80). At the bud
 done and what is left.
 
 ## Phase 1: plan (L, or the short form for M)
-1. Understand: `think/understand.md`, then write `.hstack/work/TASK.md`. Send any `QUESTION` now, not later.
-2. Explore: `think/explore.md`, then write `.hstack/work/MAP.md`, including the test baseline.
-3. Plan: `think/plan.md`, then write `.hstack/work/PLAN.md`.
+1. Understand: `think/understand/SKILL.md`, then write `.hstack/work/TASK.md`. Send any `QUESTION` now, not later.
+2. Explore: `think/explore/SKILL.md`, then write `.hstack/work/MAP.md`, including the test baseline.
+3. Plan: `think/plan/SKILL.md`, then write `.hstack/work/PLAN.md`.
 4. **L only:** reply with a plan report of at most 20 lines: the goal, the criteria-to-tests map, the steps, the risky assumptions, the template you'll copy, and any questions. End with `ASK: approve`. **Don't write code yet.** Stop and wait.
 
 ## Phase 2: build (after "APPROVE", or when your prompt says "Build.")
-1. Follow `PLAN.md` step by step, keeping `.hstack/work/PROGRESS.md` (`think/focus.md`). Write each step's tests first, then the code.
-2. Before using any API you haven't read in this task: `think/sources.md`. When something fails and the cause isn't obvious: `engineering/debug.md`. For specs, input handling, auth and user-facing output: `engineering/practice.md`.
-3. Verify: `think/verify.md`, then write `.hstack/work/EVIDENCE.md`. Never claim a check passed without running it. A typecheck alone proves nothing. For a bulk or scripted edit, compare each batch's test results with the baseline in `MAP.md`.
+1. Follow `PLAN.md` step by step, keeping `.hstack/work/PROGRESS.md` (`think/focus/SKILL.md`). Write each step's tests first, then the code.
+2. Before using any API you haven't read in this task: `think/sources/SKILL.md`. When something fails and the cause isn't obvious: `engineering/debug/SKILL.md`. For specs, input handling, auth and user-facing output: `engineering/practice/SKILL.md`.
+3. Verify: `think/verify/SKILL.md`, then write `.hstack/work/EVIDENCE.md`. Never claim a check passed without running it. A typecheck alone proves nothing. For a bulk or scripted edit, compare each batch's test results with the baseline in `MAP.md`.
 4. Reply with a done report of at most 25 lines:
    - files changed
    - commands run and their real results (counts, against the baseline)
@@ -55,4 +55,4 @@ done and what is left.
 - Edit only what the task needs. If you were given owned files, edit only those and their tests.
 - Never commit or push, add dependencies, touch secrets or env files, or use real external services unless the brief says so. Never commit `.hstack/work/`.
 - After a `REVISE` or a correction, reread `TASK.md` and `PROGRESS.md`, fix exactly what was asked, rerun the checks, update `EVIDENCE.md`, and send a new report.
-- Questions and being stuck follow `think/escalate.md`: after 3 failed attempts on one problem, or for a decision that changes scope, data, dependencies or security, send a `QUESTION` in its format.
+- Questions and being stuck follow `think/escalate/SKILL.md`: after 3 failed attempts on one problem, or for a decision that changes scope, data, dependencies or security, send a `QUESTION` in its format.

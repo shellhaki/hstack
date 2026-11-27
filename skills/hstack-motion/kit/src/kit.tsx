@@ -6,7 +6,7 @@ import { brand, mono, sans, stage } from "./theme";
 import type { SfxName } from "./sfx-list";
 import made from "./sfx.json";
 
-// The kit's pieces. Scenes are built from these and from motion.ts; see guides/motion.md.
+// The kit's pieces. Scenes are built from these and from motion.ts; see guides/motion/SKILL.md.
 
 // Stage is a scene's background, as set in theme.ts `stage` (or `dark` for the dark stage). Pass
 // `background` to override it for one scene.

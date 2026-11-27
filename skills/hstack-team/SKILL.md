@@ -32,9 +32,19 @@ Do this once per session, before any task. If a worker is already set in this se
    - **Not smaller than the frontier** (both in the list, same or higher rank): reply "<model> isn't smaller than <frontier>, pick one of: <aliases below>", then ask again.
    - Repeat until it's valid. Don't guess for the user.
 
-5. **Confirm and remember.** Reply in one line: `hstack-team active · <frontier> directs, <worker> builds (/hstack-orchestrator-swarm for parallel workers)`. Keep the worker for the rest of the session. In Claude Code pass its `alias` as the Agent tool's `model`; in Muse Code pass its `id` as the `model` of `agent()` in `muse.workflow`; in Codex pass its `id` as the spawn model; in Hermes start a separate `hermes chat -m "<worker id>"` process for the worker (same shape as Muse below).
+5. **Confirm and remember.** Reply in one line: `hstack-team active · <frontier> directs, <worker> builds (/hstack-team-swarm for parallel workers)`. Keep the worker for the rest of the session. In Claude Code pass its `alias` as the Agent tool's `model`; in Muse Code pass its `id` as the `model` of `agent()` in `muse.workflow`; in Codex pass its `id` as the spawn model; in Hermes start a separate `hermes chat -m "<worker id>"` process for the worker (same shape as Muse below).
 
 Then continue with the task the user gave, if any.
+
+## One set of guides for both modes
+`hstack` (solo) and `hstack-team` share the same guides and the same routing table,
+`<home>/skills/hstack/ROUTES.md`: the thinking guides, the engineering guides, the language guides
+(`languages/go/`, …) and the project's plugins. The only difference is who reads them: in team mode,
+the worker does, and you check it did.
+- In the brief, name the language when it matters (`CONSTRAINTS: Go 1.23, follow languages/go`), and add
+  that language's checks to DONE WHEN (for Go: `gofmt -l .`, `go vet ./...`, `go test -race ./...`).
+- In review, check the worker's ROUTE lines in `PROGRESS.md` and the ROUTES line in `EVIDENCE.md`: a
+  Go task with no `languages/go` route is a correction.
 
 ## How the worker thinks
 The worker doesn't load everything at once. Its instructions point it to
@@ -68,7 +78,7 @@ round; an unneeded L costs a round trip and a whole planning phase.
 
 **Parallel by default (M and L):** if the brief has parts that touch different files (a page and an
 API, a banner and a policy page), start one worker per part at the same time instead of one after the
-other (`hstack-orchestrator-swarm`).
+other (`hstack-team-swarm`).
 
 **Timing:** the worker stamps each phase in `PROGRESS.md`. When a task feels slow, read those stamps
 before changing the process.
@@ -131,11 +141,11 @@ Don't commit or push unless asked.
 - **Plan (L):** "Phase 1: plan only." The child writes `.hstack/work/` (`TASK.md`, `MAP.md`, `PLAN.md`) and returns its plan report.
 - **Build:** a new child with the brief, "Phase 2: build. Read `.hstack/work/PLAN.md`.", and your `APPROVE` or `REVISE` lines. Pass the plan child's `result.ref` so it can read the plan report.
 - **Correction:** a new child with the brief, the done report's `ref`, and your exact correction.
-Use `isolation: true` only for parallel work (see `hstack-orchestrator-swarm`); a single worker shares your checkout.
+Use `isolation: true` only for parallel work (see `hstack-team-swarm`); a single worker shares your checkout.
 
 **Codex.** Ask Codex to spawn the custom agent `hstack_worker` with `model: "<worker id>"` and the brief as its task, with "Build." (S, M) or "Phase 1: plan only." (L). Send APPROVE, REVISE and corrections as follow-up input to the same agent thread, so it keeps its context. The reviewer is `hstack_reviewer`.
 
-**Hermes Agent.** Start the worker as a separate `hermes chat` process on the worker model: `hermes chat -m "<worker id>"` (`-p <profile>` to target a profile, `--in <dir>` to scope the worktree, `-s hstack` to preload the hstack guides), with an input that starts with "Follow `<home>/agents/hstack-worker.md` as your instructions." followed by the brief. A Hermes worker can't be messaged again, so each step is a new process that reads the files the last one left (same shape as Muse Code above: S and M are one build process; L is a plan process, then a build process reading `.hstack/work/PLAN.md`, then a correction process). Paste the previous report inline: Hermes has no result refs. Use `-w` only for parallel work (see `hstack-orchestrator-swarm`); a single worker shares your checkout.
+**Hermes Agent.** Start the worker as a separate `hermes chat` process on the worker model: `hermes chat -m "<worker id>"` (`-p <profile>` to target a profile, `--in <dir>` to scope the worktree, `-s hstack` to preload the hstack guides), with an input that starts with "Follow `<home>/agents/hstack-worker.md` as your instructions." followed by the brief. A Hermes worker can't be messaged again, so each step is a new process that reads the files the last one left (same shape as Muse Code above: S and M are one build process; L is a plan process, then a build process reading `.hstack/work/PLAN.md`, then a correction process). Paste the previous report inline: Hermes has no result refs. Use `-w` only for parallel work (see `hstack-team-swarm`); a single worker shares your checkout.
 
 ## Token discipline
 - Never read whole diffs or logs. Trust the worker's tests and spot-check your risk areas.

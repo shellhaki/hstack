@@ -35,7 +35,7 @@ Frontier tokens cost far more than small-model tokens, and the expensive part of
 3. **Plan:** an `hstack-worker` sub-agent on the worker model explores and returns a short plan. The frontier replies `APPROVE` or `REVISE` in a few lines.
 4. **Build:** the same worker keeps its context. It writes tests first, implements, runs the checks until they pass, and returns a compact done report.
 5. **Review:** the frontier runs the checks itself, spot-checks only its risk areas, and sends at most one correction round.
-6. **`/hstack-orchestrator-swarm`** (optional): the worker plans a split, several workers build independent parts in parallel, and an `hstack-reviewer` tries to break the result.
+6. **`/hstack-team-swarm`** (optional): the worker plans a split, several workers build independent parts in parallel, and an `hstack-reviewer` tries to break the result.
 
 ## Risks and how hstack handles them
 
@@ -53,12 +53,15 @@ Frontier tokens cost far more than small-model tokens, and the expensive part of
 | [`hstack`](skills/hstack/SKILL.md) | skill, `/hstack` | Solo mode, the root: gives the running model the guides and routes to the domain skills, with no orchestration |
 | [`hstack-team`](skills/hstack-team/SKILL.md) | skill, `/hstack-team` (frontier) | Orchestration: asks for a valid, smaller worker model, then runs the senior-engineer loop: task size, brief, plan review, build review, one correction round, token discipline |
 | [`hstack-swarm`](skills/hstack-swarm/SKILL.md) | skill, `/hstack-swarm` | Solo parallel: the running model splits the work and builds independent parts with parallel copies of itself, then an independent reviewer |
-| [`hstack-orchestrator-swarm`](skills/hstack-orchestrator-swarm/SKILL.md) | skill, `/hstack-orchestrator-swarm` | Team parallel: the frontier directs several smaller workers on independent parts, then an independent reviewer |
+| [`hstack-team-swarm`](skills/hstack-team-swarm/SKILL.md) | skill, `/hstack-team-swarm` | Team parallel: the frontier directs several smaller workers on independent parts, then an independent reviewer |
 | [`hstack-ui`](skills/hstack-ui/SKILL.md) | skill, `/hstack-ui` | UI work from real references: a design system first, then pages built only from it, reviewed by screenshot |
 | [`hstack-motion`](skills/hstack-motion/SKILL.md) | skill, `/hstack-motion` | Motion-graphics videos from a prompt or a codebase: storyboard first, scenes built in Remotion from a starter kit, voice and sound timed to words, reviewed as stills |
+| [`hstack-learn`](skills/hstack-learn/SKILL.md) | skill, `/hstack-learn` | Compiles a library or tool's codebase into a ready-to-use skill, pinned to the version in use: how it works inside, proved usage examples, where to fix what and how to fix it upstream. Installs for this project (`.hstack/plugins/`) or globally |
 | [`hstack-update`](skills/hstack-update/SKILL.md) | skill, `/hstack-update` | Updates hstack to the latest skills and sub-agents in every harness it is installed in, and lists the skill versions that changed |
 | [`hstack-research`](skills/hstack-research/SKILL.md) | skill, `/hstack-research` | Market and technical research: workers read the web and write sourced notes, the frontier writes one report with a recommendation |
 | [`hstack` guides](skills/hstack/ROUTES.md) | guides | How the model thinks (solo, or as the worker), read one at a time from a routing table: understand, explore, plan, sources, focus, verify, escalate, plus practice, debug and refactor |
+| [Go guide](skills/hstack/languages/go/SKILL.md) | language guide | Routed from `ROUTES.md` on any Go task, solo or team: always-on Go rules plus 17 topics (errors, concurrency, testing, security, database, performance, …), compiled from [samber/cc-skills-golang](https://github.com/samber/cc-skills-golang) (MIT) |
+| [Evals](evals/README.md) | hardening loop | Small tasks with hidden tests, run with and without hstack; failures become guide rules |
 | [`hstack-worker`](agents/hstack-worker.md) | sub-agent | Plans, then builds and reports, in two phases |
 | [`hstack-researcher`](agents/hstack-researcher.md) | sub-agent | Answers one research question from the web, with sourced notes |
 | [`hstack-reviewer`](agents/hstack-reviewer.md) | sub-agent | Tries to break the work and reports defects without fixing them |
@@ -101,7 +104,7 @@ Other ways to install:
 
    > Build the waitlist API from SPEC.md, with tests.
 
-   For tasks that split into independent parts, run **`/hstack-orchestrator-swarm`** first (or **`/hstack-swarm`** in solo mode).
+   For tasks that split into independent parts, run **`/hstack-team-swarm`** first (or **`/hstack-swarm`** in solo mode).
 
 Small tasks are done directly, without delegation, because delegating them costs more than it saves.
 

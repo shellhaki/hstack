@@ -1,5 +1,5 @@
 // Command hstack installs hstack for Claude Code, Muse Code, Codex or Hermes Agent: the skills (hstack,
-// hstack-team, hstack-swarm, hstack-orchestrator-swarm, hstack-ui, hstack-motion, hstack-research, hstack-update) and the worker sub-agents (hstack-worker, hstack-reviewer).
+// hstack-team, hstack-swarm, hstack-team-swarm, hstack-ui, hstack-motion, hstack-research, hstack-learn, hstack-update) and the worker sub-agents (hstack-worker, hstack-reviewer).
 //
 //	hstack            install for Claude Code (same as `hstack install`)
 //	hstack install    [--agent claude|muse|codex|hermes]

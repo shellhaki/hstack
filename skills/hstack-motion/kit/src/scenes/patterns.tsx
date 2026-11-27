@@ -5,7 +5,7 @@ import { Glitchy, Sfx, Shine, Stage, Tilt, typed, Window } from "../kit";
 import { s } from "../script";
 import { brand, mono } from "../theme";
 
-// More example scenes that teach techniques (guides/motion.md). Read them; don't ship them. They use
+// More example scenes that teach techniques (guides/motion/SKILL.md). Read them; don't ship them. They use
 // fixed timings (s(...)) so they preview on their own in the Gallery composition.
 
 // Chats: "how people do it today". Generic chat windows fill with messages, one ping each.
@@ -119,7 +119,7 @@ export function Copies() {
 }
 
 // Product: the real app, rebuilt from its own tokens, tilted in 3D, slowly turning, light sweeping
-// across it. Replace the placeholder rows with the app's real screen (guides/from-codebase.md).
+// across it. Replace the placeholder rows with the app's real screen (guides/from-codebase/SKILL.md).
 export function Product() {
   const frame = useCurrentFrame();
   return <Stage>

@@ -5,7 +5,7 @@ import { Sfx, SLOT_SPIN, SLOT_STAGGER, SlotWord, Stage, typed, TypeLine } from "
 import { at, s } from "../script";
 import { brand, mono } from "../theme";
 
-// Example scenes that teach techniques (guides/motion.md). Read them; don't ship them. A video made
+// Example scenes that teach techniques (guides/motion/SKILL.md). Read them; don't ship them. A video made
 // of these with new words looks like every other video from this kit. Each reads its timing from its
 // script line with `at`.
 

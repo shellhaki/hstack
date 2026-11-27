@@ -30,7 +30,7 @@ inform, 3 to 6 concrete questions, the scope (market, technical or both), what i
 what would change the decision. A question that no answer would change gets cut.
 
 **2. Gather (workers, in parallel).** Start one worker per question, on the session's worker model.
-Each gets the brief, its one question, and "Follow `guides/gathering.md`; write `notes/<q>.md` from
+Each gets the brief, its one question, and "Follow `guides/gathering/SKILL.md`; write `notes/<q>.md` from
 `templates/notes.md`."
 - **Claude Code:** the Agent tool with `subagent_type: "hstack-researcher"` (it has web search and
   fetch), all started in the background; wait for their notifications.
@@ -43,7 +43,7 @@ If the harness has no web search or fetch, stop and tell the user.
 worker, once, if: a key claim has no source, sources conflict without the conflict being stated, the
 newest source is over a year old on a fast-moving topic, or the answer drifted from the question.
 
-**4. Report (frontier).** Write `REPORT.md` from `templates/report.md`, following `guides/synthesis.md`:
+**4. Report (frontier).** Write `REPORT.md` from `templates/report.md`, following `guides/synthesis/SKILL.md`:
 the answer first, options compared in one table, a recommendation with confidence and reasons, risks,
 what could not be verified, and next steps written so they can become an `hstack` brief directly.
 
@@ -61,7 +61,7 @@ risk, and the report's path.
 - Say what could not be read (paywalls, logins, blocked sites) instead of guessing what it says.
 
 ## Market vs technical
-`guides/gathering.md` lists what to look for in each: competitors, pricing, positioning, users, demand
+`guides/gathering/SKILL.md` lists what to look for in each: competitors, pricing, positioning, users, demand
 and gaps for market questions; options, maturity, maintenance, license, performance, integration cost
 and known problems for technical ones.
 

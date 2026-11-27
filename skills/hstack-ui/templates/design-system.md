@@ -1,11 +1,11 @@
 # DESIGN.md template
 
-Copy this into `.hstack/ui/DESIGN.md` and fill it as `guides/writing-design-md.md` describes. Write values, not
+Copy this into `.hstack/ui/DESIGN.md` and fill it as `guides/writing-design-md/SKILL.md` describes. Write values, not
 adjectives ("16px", not "comfortable"). Anything the brief doesn't answer: write `[ASK]`.
 
 ```
 # Design system
-Written from guides/design-principles.md on <date>; user-named sites: <none | site>
+Written from guides/design-principles/SKILL.md on <date>; user-named sites: <none | site>
 Type pairing: <id from type.json>; palette: <id from palettes.json>
 
 ## Product
@@ -41,7 +41,7 @@ Card, table, list, tabs, dialog, sheet, menu, toast, badge, avatar: the look in 
 States for every data view: empty (icon, one line, one action), loading (skeleton), error (message + retry)
 
 ## Signature (this project's own)
-2 to 4 concrete moves that come from the product's material, never type tricks (guides/anti-slop.md) and never a move from guides/design-principles.md section 8.
+2 to 4 concrete moves that come from the product's material, never type tricks (guides/anti-slop/SKILL.md) and never a move from guides/design-principles/SKILL.md section 8.
 
 ## Do / don't (project-specific)
 ```

@@ -7,7 +7,7 @@ import { join, relative, basename } from "node:path";
 const root = process.argv[2] ?? process.cwd();
 const cfgPath = join(root, "components.json");
 if (!existsSync(cfgPath)) {
-  console.error("No components.json: run `npx shadcn@latest init` first (guides/components.md).");
+  console.error("No components.json: run `npx shadcn@latest init` first (guides/components/SKILL.md).");
   process.exit(1);
 }
 const cfg = JSON.parse(readFileSync(cfgPath, "utf8"));
@@ -69,7 +69,7 @@ if (!registry) console.error("note: could not fetch the @shadcn index; the ui fo
 
 if (findings.length) {
   console.log(findings.join("\n"));
-  console.log(`\n${findings.length} hand-built part(s). Replace each with an installed registry part (guides/components.md).`);
+  console.log(`\n${findings.length} hand-built part(s). Replace each with an installed registry part (guides/components/SKILL.md).`);
   process.exit(1);
 }
 console.log("ok: every interactive element comes from installed registry parts");

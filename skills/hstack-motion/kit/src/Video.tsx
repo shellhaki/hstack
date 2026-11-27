@@ -14,12 +14,12 @@ import { Bars, Intro, Nodes, Outro, Words } from "./scenes/examples";
 // One component per script line, by id.
 const SCENES: Record<string, () => ReactNode> = { intro: Intro, nodes: Nodes, words: Words, bars: Bars, outro: Outro };
 
-// How each scene is entered, and the sound under the move (guides/transitions.md).
+// How each scene is entered, and the sound under the move (guides/transitions/SKILL.md).
 const HANDOVER: Record<string, [TransitionPresentation<Record<string, never>>, SfxName]> = {
   nodes: [through(), "whoosh"], words: [whip(), "swipe"], bars: [reel(), "slot"], outro: [iris(), "shimmer"],
 };
 
-// Put the user's track at public/music/background.mp3 to use it (guides/sound.md).
+// Put the user's track at public/music/background.mp3 to use it (guides/sound/SKILL.md).
 const MUSIC = "music/background.mp3";
 const HAS_MUSIC = false;
 
