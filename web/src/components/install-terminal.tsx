@@ -40,7 +40,7 @@ export function InstallTerminal() {
             <div className="whitespace-nowrap"><span className="text-frontier">$</span> {INSTALL_CMD}</div>
             <div className="whitespace-nowrap"><span className="text-frontier">$</span> {INSTALL_HERMES}</div>
             <div className="whitespace-nowrap text-ink-3">✓ linked skills into ~/.hermes/skills — no sub-agent files</div>
-            <div className="whitespace-nowrap text-ink-3">Done. In a session on your frontier model, run <span className="text-ink">/hstack</span></div>
+            <div className="whitespace-nowrap text-ink-3">Done. In a session, run <span className="text-ink">/hstack</span></div>
             <div className="whitespace-nowrap text-ink-3">Which smaller model should do the work? <span className="text-ink">spark-1.2</span></div>
             <div className="whitespace-nowrap text-ink-3">hstack active · frontier directs, worker builds as a separate hermes chat process</div>
             <div><span className="text-frontier">&gt;</span><span className="caret" /></div>

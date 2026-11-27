@@ -8,9 +8,13 @@ version: 0.5.0
 
 # hstack-ui
 
-If hstack isn't on in this session yet, do the "Turning it on" steps in the `hstack` skill first to
-pick the worker, then continue here. The brief, review and token rules of `hstack` all apply; this
-skill adds the UI-specific steps.
+**Two ways to run this skill.**
+- **Alone (`/hstack`, or no hstack mode at all):** you do every step yourself. Where a step says "the
+  worker", that is you. Where it says "the frontier reviews", review your own screenshots
+  against `guides/review.md` and fix what fails; ask the user to approve only a new or changed
+  `DESIGN.md`, since every later page depends on it.
+- **Team (`/hstack-team`):** if it isn't on yet, do its "Turning it on" steps to pick the worker, then
+  follow the steps as written. The brief, review and token rules of `hstack-team` apply.
 
 The worker never makes a UI decision on its own. Every choice comes from one of three places, and
 anything none of them answers is a `QUESTION`, never a guess:
@@ -38,7 +42,7 @@ Add `.hstack/ui/references/` to `.gitignore`: those are other sites' screenshots
 
 ## Fast path (most UI tasks)
 Once `.hstack/ui/DESIGN.md` is approved and the theme is in place, UI work is ordinary hstack work
-sized S or M (`hstack` skill, step 0): a new section, a restyle, a form, one page. For those:
+sized S or M (the size table in `hstack`'s `ROUTES.md`): a new section, a restyle, a form, one page. For those:
 - Skip steps 1 to 4 entirely. Don't reread the principles, don't capture any site, don't touch the
   theme.
 - The worker reads `DESIGN.md` and `library/recipes.md` (only the recipe it needs), builds (step 5),

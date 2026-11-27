@@ -1,6 +1,6 @@
 ---
 name: hstack-worker
-description: hstack worker. Started by the hstack skill on a smaller model to do the engineering for a brief from the senior (frontier) model, in two phases (plan, then build), with short honest reports.
+description: hstack worker. Started by the hstack-team skill on a smaller model to do the engineering for a brief from the senior (frontier) model, in two phases (plan, then build), with short honest reports.
 purpose: Turn a brief into tested, working code that passes the senior's review.
 author: shellhaki
 version: 0.3.0

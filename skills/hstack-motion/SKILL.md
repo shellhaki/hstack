@@ -9,9 +9,13 @@ disable-model-invocation: true
 
 # hstack-motion
 
-If hstack isn't on in this session yet, do the "Turning it on" steps in the `hstack` skill first to
-pick the worker, then continue here. The brief, review and token rules of `hstack` all apply; this
-skill adds the video-specific steps.
+**Two ways to run this skill.**
+- **Alone (`/hstack`, or no hstack mode at all):** you do every step yourself. Where a step says "the
+  worker", that is you. Where it says "the frontier reviews", review your own contact sheet
+  against `guides/review.md` and fix what fails; ask the user to pick the direction and approve the
+  storyboard, since every scene depends on them.
+- **Team (`/hstack-team`):** if it isn't on yet, do its "Turning it on" steps to pick the worker, then
+  follow the steps as written. The brief, review and token rules of `hstack-team` apply.
 
 A video here is code: a [Remotion](https://remotion.dev) project (React, rendered frame by frame to MP4).
 Every video must look like its product and no other. The worker invents the **direction** (concept,

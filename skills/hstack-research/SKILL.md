@@ -8,9 +8,13 @@ version: 0.1.0
 
 # hstack-research
 
-If hstack isn't on in this session yet, do the "Turning it on" steps in the `hstack` skill first to
-pick the worker. The token rules of `hstack` apply: workers read the web (cheap input), the frontier
-reads only their notes and writes the report (expensive output, kept short).
+**Two ways to run this skill.**
+- **Alone (`/hstack`, or no hstack mode at all):** you do the research and write the notes and the
+  report yourself, one question at a time. Where a step says "the worker" or "the frontier", that is
+  you.
+- **Team (`/hstack-team`):** if it isn't on yet, do its "Turning it on" steps to pick the worker. Its
+  token rules apply: workers read the web (cheap input), the frontier reads only their notes and
+  writes the report (expensive output, kept short).
 
 ## Files in the user's project (`.hstack/research/<topic>/`)
 ```

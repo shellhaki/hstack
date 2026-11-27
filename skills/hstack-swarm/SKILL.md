@@ -1,58 +1,62 @@
 ---
 name: hstack-swarm
-description: Parallel hstack mode. Use for /hstack-swarm when hstack is active and the work splits into independent parts. The worker plans the split, several workers build the parts in parallel, and an independent reviewer tries to break the result.
-purpose: Finish large tasks faster without letting parallel work skip review.
+description: Solo parallel mode. Use for /hstack-swarm when the work splits into independent parts (separate modules, pages, services or files). The running model plans the split, builds shared contracts first, starts parallel copies of itself on the parts (same model, same hstack guides), has an independent reviewer try to break the result, then merges and verifies. For a frontier directing smaller workers, use /hstack-orchestrator-swarm.
+purpose: Finish large tasks faster on one model, without letting parallel work skip review.
 author: shellhaki
-version: 0.2.0
+version: 1.0.0
 disable-model-invocation: true
 ---
 
 # /hstack-swarm
 
-Use this for tasks that split into independent parts (separate modules, services or files). If hstack isn't on yet, do the "Turning it on" steps in `hstack` first to get a worker model. Everything in the `hstack` skill still applies; only the build phase changes.
+You split the work and run it in parallel on **your own model**: no smaller worker, no model picker.
+Every part follows the `hstack` guides (`~/.config/hstack/skills/hstack/ROUTES.md`). Use it only when
+the parts are truly independent; for one connected change, plain `/hstack` is faster.
 
-1. **Brief** as in `hstack` section 1.
+## Steps
+1. **Understand and explore** the whole task yourself (`think/understand.md`, `think/explore.md`):
+   `.hstack/work/TASK.md` and the project map `.hstack/MAP.md`.
 
-2. **Plan the split.** Start one `hstack-worker` (your worker model) with the brief and this instruction:
+2. **Plan the split** in `.hstack/work/PLAN.md`: 2–6 parts with **disjoint files**. For each part:
+   name, owned files, what to build, its tests, its done command. Shared types, contracts, routes or
+   schema go in a **part 0**. If two parts need the same file, merge them or move that file to
+   part 0. If the split is a judgement call the user cares about, show it to them first; otherwise
+   carry on.
 
-   "Phase 1: plan only, and split the work into 2-6 independent parts with disjoint files. For each part give: name, owned files, what to build, its tests, its done command. Shared types and contracts go in a 'part 0' you build first."
+3. **Build part 0 yourself**, then run its checks. The other parts build on it.
 
-   Review the split. Parts must not share files. Approve or REVISE as usual.
-
-3. **Part 0 (if any).** Continue the same worker: "Build part 0 only, then report."
-
-4. **Fan out.** Start one `hstack-worker` per remaining part, **in parallel and in the background**, on the same worker model. Give each one:
-   - the brief
-   - its part
-   - its owned files
-   - the rule "edit only your owned files and their tests"
-   - "Phase 2: build it, test first, run your done command, then report"
+4. **Fan out.** Start one sub-agent per remaining part, **in parallel and in the background**, on
+   your own model (see "By harness"). Give each one:
+   - "Follow `~/.config/hstack/agents/hstack-worker.md` as your instructions. SIZE: <S or M>. Build."
+   - the task in a few lines and its part from `PLAN.md`
+   - its owned files and the rule "edit only your owned files and their tests"
+   - its done command
 
    Wait for completion notifications. Never poll.
 
-5. **Independent review.** Start one `hstack-reviewer` on the worker model with the brief and the list of parts. It runs the full checks and tries to break the work with new tests, without fixing product code. It returns defects with file and line.
+5. **Independent review.** Start one `hstack-reviewer` sub-agent on your model with the task, the
+   parts and the done commands. It runs the full checks and tries to break the result with new
+   tests, without fixing product code, and returns defects with file and line.
 
-6. **Fix.** Send each defect to the worker that owns that file, as one round of exact corrections.
+6. **Fix.** Send each defect to the part that owns the file (a new sub-agent with the defect lines
+   and the part's report), or fix it yourself if it is small or crosses parts.
 
-7. **Review and report** as in `hstack` sections 4 and 5. Run the full done commands yourself once, and spot-check your RISKS.
+7. **Merge and verify.** Bring every part into your checkout, run the full done commands once, and
+   write `.hstack/work/EVIDENCE.md` (`think/verify.md`). Report to the user as `hstack` says.
 
-## In Muse Code
-Same steps, with `muse.workflow` (see "Delegation by harness" in `hstack`):
-- **Plan and part 0:** separate `agent()` children, the build child reading `.hstack/work/PLAN.md`.
-- **Fan out:** `parallel([...])` of one `agent()` per part, each with `isolation: true` so every part builds in its own worktree, `model: "<worker id>"`, and the part's instructions above.
-- **Review:** one `agent()` whose input starts with "Follow `<home>/agents/hstack-reviewer.md` as your instructions."
-- **Fix:** a new child per affected part, with that part's result `ref` and the exact corrections.
-- **Merge:** bring each part's worktree changes into your checkout, then run the full done commands once.
+## By harness
+- **Claude Code:** the Agent tool with `subagent_type: "hstack-worker"` and **no `model`**, so it
+  runs on your model; reviewer with `subagent_type: "hstack-reviewer"`. Several Agent calls in one
+  message run in parallel.
+- **Muse Code:** `parallel([...])` of `agent()` children in `muse.workflow`, each with
+  `isolation: true` (its own worktree) and no `model` override. Merge each worktree afterwards.
+- **Codex:** spawn `hstack_worker` per part and `hstack_reviewer` for review, on your own model.
+- **Hermes Agent:** one `hermes chat -m "<your model id>" -w` process per part, in the background,
+  each with its part's instructions; paste reports inline (no result refs).
+- **No sub-agents in this harness:** build the parts one after another yourself, in the planned
+  order, running each part's done command before the next. You still get the split, part 0 and the
+  review; only the parallelism is lost.
 
-## In Codex
-- **Parts and review:** spawn `hstack_worker` per part, in parallel, with `model: "<worker id>"`, and `hstack_reviewer` on the worker model for review, as in `hstack` ("Delegation by harness").
-
-## In Hermes Agent
-Same steps, as separate `hermes chat` processes (see "Delegation by harness" in `hstack`):
-- **Plan and part 0:** one process with the split instruction, then a new process reading `.hstack/work/PLAN.md` for part 0. Paste the previous report inline; there are no result refs.
-- **Fan out:** one `hermes chat -m "<worker id>" --in <part-workdir>` process per part, in parallel and in the background, each with its part's instructions above. Use `-w` when the parts need isolated worktrees.
-- **Review:** one process whose prompt starts with "Follow `<home>/agents/hstack-reviewer.md` as your instructions."
-- **Fix:** a new process per affected part, with the defect lines and the exact corrections.
-- **Merge:** bring each part's changes into your checkout, then run the full done commands once.
-
-Cost note: every part's tokens are at the worker's price. Your share is the brief, approvals and reviews. Keep the parts truly independent, so you never have to mediate conflicts.
+Cost note: every part runs on your model, so this costs about the same tokens as doing it yourself
+(slightly more for the review). What you buy is time. To also cut cost, use
+`/hstack-orchestrator-swarm` with a smaller worker.

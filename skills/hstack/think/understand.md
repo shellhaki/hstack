@@ -29,7 +29,7 @@ on purpose, before you plan.
      change: data shape, public API, security).
    - An **unknown** is a gap you can't fill from the brief, the code or the docs.
 6. **The ambiguity test.** For each unknown and each `RISKY` assumption, ask: "would two reasonable
-   answers produce different code that the senior might reject?" If yes, it's a `QUESTION`
+   answers produce different code that the reviewer might reject?" If yes, it's a `QUESTION`
    (`think/escalate.md`). If no, choose, and record it as an assumption.
 7. **Check the criteria for conflicts** with each other and with the constraints (no new
    dependencies, off-limits files). A conflict is always a `QUESTION`.

@@ -2,7 +2,7 @@
 
 A strong engineer knows which decisions are theirs and which aren't. Smaller models tend either to
 push through a decision they shouldn't make, or to ask about things they could look up. Both waste
-the senior's time. Use these rules.
+the reviewer's time. Use these rules.
 
 ## Ask (send a `QUESTION`) when
 - A decision changes **scope, the public API, the data model, a dependency or security** and the

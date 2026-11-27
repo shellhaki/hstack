@@ -1,5 +1,5 @@
 // Command hstack installs hstack for Claude Code, Muse Code, Codex or Hermes Agent: the skills (hstack,
-// hstack-swarm, hstack-ui, hstack-motion, hstack-research, hstack-update) and the worker sub-agents (hstack-worker, hstack-reviewer).
+// hstack-team, hstack-swarm, hstack-orchestrator-swarm, hstack-ui, hstack-motion, hstack-research, hstack-update) and the worker sub-agents (hstack-worker, hstack-reviewer).
 //
 //	hstack            install for Claude Code (same as `hstack install`)
 //	hstack install    [--agent claude|muse|codex|hermes]
@@ -200,7 +200,7 @@ func cmdInstall(args []string) error {
 	}
 
 	fmt.Println()
-	fmt.Println(bold("Done.") + " In a session on your frontier model, run  /hstack  to pick the worker.")
+	fmt.Println(bold("Done.") + " In a session, run  /hstack  to turn the guides on (or  /hstack-team  to direct a smaller worker).")
 	return nil
 }
 

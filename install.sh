@@ -7,7 +7,7 @@
 #   Hermes:      links skills into $HERMES_HOME/skills (default ~/.hermes/skills; set HERMES_HOME
 #                to target a profile). The worker is a separate `hermes chat` process, so there
 #                are no sub-agent files to write.
-# The worker model is chosen inside a session, with /hstack.
+# In a session: /hstack turns the guides on; /hstack-team picks a smaller worker to direct.
 # Usage: ./install.sh [claude-config-dir]     (default: ~/.claude)
 #        HSTACK_AGENT=muse ./install.sh
 #        HSTACK_AGENT=codex ./install.sh
@@ -41,14 +41,14 @@ case "$AGENT" in
     prune "$BASE/skills"; prune "$BASE/agents"
     for skill in "$HERE"/skills/*/; do link "${skill%/}" "$BASE/skills/$(basename "$skill")"; done
     for agent in "$HERE"/agents/*.md; do link "$agent" "$BASE/agents/$(basename "$agent")"; done
-    echo "Done. In Claude Code, on your frontier model, run /hstack."
+    echo "Done. In Claude Code, run /hstack (or /hstack-team on your frontier model to direct a smaller worker)."
     ;;
   muse)
     BASE=$HOME/.agents
     mkdir -p "$BASE/skills"
     prune "$BASE/skills"
     for skill in "$HERE"/skills/*/; do link "${skill%/}" "$BASE/skills/$(basename "$skill")"; done
-    echo "Done. In Muse Code, on your frontier model (e.g. muse --model muse-wonder-1.0), run /hstack."
+    echo "Done. In Muse Code, run /hstack (or /hstack-team on your frontier model, e.g. muse-wonder-1.0, to direct a smaller worker)."
     ;;
   codex)
     BASE=$HOME/.agents
@@ -57,14 +57,14 @@ case "$AGENT" in
     for skill in "$HERE"/skills/*/; do link "${skill%/}" "$BASE/skills/$(basename "$skill")"; done
     echo "Skills linked. Codex sub-agents (hstack_worker, hstack_reviewer, hstack_researcher) are not linked:"
     echo "  they are generated TOML in \${CODEX_HOME:-~/.codex}/agents. Write them with: hstack install --agent codex"
-    echo "Done. In Codex, on your frontier model, run /hstack."
+    echo "Done. In Codex, run /hstack (or /hstack-team on your frontier model to direct a smaller worker)."
     ;;
   hermes)
     BASE=${HERMES_HOME:-$HOME/.hermes}
     mkdir -p "$BASE/skills"
     prune "$BASE/skills"
     for skill in "$HERE"/skills/*/; do link "${skill%/}" "$BASE/skills/$(basename "$skill")"; done
-    echo "Done. In Hermes Agent, on your frontier model, run /hstack (the worker is a separate \`hermes chat\` process)."
+    echo "Done. In Hermes Agent, run /hstack (or /hstack-team on your frontier model; its worker is a separate \`hermes chat\` process)."
     ;;
   *)
     echo "unknown HSTACK_AGENT=$AGENT (use claude, muse, codex or hermes)" >&2

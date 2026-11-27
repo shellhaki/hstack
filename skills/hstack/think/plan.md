@@ -43,4 +43,4 @@ RISKS: <risk> → <measure, where>
 ROLLBACK: <how to undo, or n/a>
 DONE COMMANDS: <from the brief + MAP.md>
 ```
-Your plan report to the senior is the short form of this file, at most 20 lines.
+In `/hstack-team`, your plan report to the senior is the short form of this file, at most 20 lines.

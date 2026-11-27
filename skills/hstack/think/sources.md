@@ -19,7 +19,7 @@ an environment variable.
      `python -c "import x; help(x.y)"`.
    - CLI: `<tool> --help` and `<tool> <subcommand> --help`.
    - HTTP API: the OpenAPI document if it has one (`/openapi.json`), or the official docs page.
-3. **Write down where you read it:** the file and line or the command, in `PROGRESS.md`. The senior
+3. **Write down where you read it:** the file and line or the command, in `PROGRESS.md`. The reviewer
    may ask.
 4. **Can't find it, or the docs are unclear?** Write a probe: a 5 to 15 line script that calls the
    API and prints the result. Run it, then delete it. A probe settles in a minute what guessing
