@@ -45,6 +45,16 @@ Choose one and describe it in a line:
 - **Physical:** things fall, stack, pin, fold, with gravity and weight (anything with a physical
   metaphor: paper, cards, boards).
 - **Continuous camera:** no scene cuts at all; the camera travels through one big world.
+- **Organic product film:** the real product, driven by a cursor and typing, with depth (a huge
+  blurred word behind small sharp text, far elements out of focus), slow dollies into the UI, small
+  sounds on every interaction and a music bed the cuts land on. Calm, premium, believable. The default
+  for product launches and feature announcements.
+- **Hyper:** beat-locked kinetic graphics, a cut every beat or two, slams, flashes, split screens and
+  a planned peak (`guides/hyper/SKILL.md`). For teasers, stingers and social cut-downs; never for
+  explainers.
+
+A film can open in hyper for 3–6 seconds and settle into an organic product film; say so in the
+direction, and change language only at a clear boundary.
 
 The transitions follow the language: an editorial video uses few, slow transitions; a continuous one
 uses none, only camera moves.
@@ -53,6 +63,10 @@ uses none, only camera moves.
 Pick the one that fits what the product does best (`guides/story/SKILL.md` describes each):
 problem → fix · a day in the life · before / after · one continuous product journey · a question and
 its answer · a list that builds · a manifesto.
+
+## References the user sent
+If the user sent videos or prompts they like, break them down first (`guides/references/SKILL.md`) and
+let each direction say which techniques it borrows. Never their scenes, layouts, copy or characters.
 
 ## Write three directions, pick one
 In `STORYBOARD.md`, under DIRECTIONS, write three directions that differ in **concept and structure**,

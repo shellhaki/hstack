@@ -45,7 +45,22 @@ copy and order are what made every earlier video look the same.
 | Messages arriving in windows | `Chats` in `scenes/patterns.tsx` |
 | A product window in 3D with a light sweep | `Product` in `scenes/patterns.tsx` |
 
-Preview them with the `Gallery` composition. Techniques that fit other concepts and are not in the kit
+Preview them with the `Gallery` composition. Before writing a new piece, check whether a free snapcn
+component already does it well (`guides/components/SKILL.md`): screens and devices, cursors, AI
+prompts, captions, logo reveals.
+
+Techniques that make a product film feel organic (build them for your concept; none is in the kit):
+- **Ghost word depth:** a huge word, blurred and faint, behind the small sharp line that says it.
+- **Focus pull:** many small elements (logos, files, messages) drifting at different depths, the far
+  ones blurred, converging into one sharp thing.
+- **Cursor-driven story:** a cursor hovers, clicks and drags through the real UI; buttons press in and
+  morph (a send button becomes the next state).
+- **Type into the frame:** a prompt typed huge across the screen, then shrinking into the input it
+  belongs to.
+- **Working state:** a shimmer passing over "Working…" or a progress line, held just long enough.
+- **Proof beat:** one number against a bar or a before/after, counted up on the beat.
+- **Dolly into the UI:** the camera moves into a panel of the real app, the rest falling out of focus.
+Hyper-language techniques are in `guides/hyper/SKILL.md`. Techniques that fit other concepts and are not in the kit
 (build them): a camera traveling across one large canvas, paper pinning and folding, a grid filling
 cell by cell, a map zooming to a place, a cursor driving the real UI, a split screen, type set along
 a path, a counter that becomes a chart.

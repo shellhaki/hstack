@@ -3,7 +3,7 @@ name: hstack-motion
 description: Motion-graphics videos under hstack. Use only when the user invokes /hstack-motion to make a promo, launch, teaser, explainer or product video (YouTube, social, landing-page hero) from a prompt or from a codebase. The worker writes a storyboard and script first, picks one of three creative directions drawn from the product's own world, writes a storyboard, builds original scenes in Remotion on a kit of primitives (springs, transitions, voice and sound timed to words), and the frontier reviews stills before anything is rendered in full.
 purpose: Launch-quality motion graphics from a small model that look like this product and no other, with no slideshow fades, no robotic voice and no invented claims.
 author: shellhaki
-version: 0.2.0
+version: 0.3.0
 disable-model-invocation: true
 ---
 
@@ -15,9 +15,12 @@ These gates can't be skipped, and the report shows each with its evidence:
 DIRECTIONS: 3 written in STORYBOARD.md, differing in concept and structure → chosen: <A/B/C> by <user/frontier>
 DEFAULTS CHECK: none of guides/direction/SKILL.md's defaults, or each with its reason
 EXAMPLES REMOVED: scenes/examples.tsx, scenes/patterns.tsx and Gallery gone from video/
+REFERENCES: each one broken down (tools/analyze-ref.sh) into TECHNIQUES.md; nothing copied  (if any were sent)
+MUSIC: <source: user track / ElevenLabs Music / library / synth>; BPM in src/beat.ts; cuts on beat(n)
 TYPECHECK: bunx tsc --noEmit → <exit 0>
 STILLS: .hstack/motion/stills/sheet.png, frames at rest, mid-motion and mid-transition
 REVIEW: guides/review/SKILL.md run on the sheet → <issues fixed>
+LOUDNESS: ebur128 on the final file → <integrated LUFS>, true peak <= -1 dBTP
 ```
 
 **Two ways to run this skill.**
@@ -39,9 +42,12 @@ number, screen and command is real, and anything missing is a `[NEED: …]`.
 3. The kit in `<skill>/kit/`: **primitives** (springs, easing, timing to words, transitions, sound,
    stills) and example scenes that teach techniques. The examples are for reading, never for shipping
    with new content.
-4. The guides: `guides/direction/SKILL.md` (choosing the direction, and the defaults to avoid),
+4. References the user sends: videos and prompts to learn techniques from, never to copy
+   (`guides/references/SKILL.md`).
+5. The guides: `guides/direction/SKILL.md` (choosing the direction, and the defaults to avoid),
    `guides/story/SKILL.md`, `guides/motion/SKILL.md`, `guides/transitions/SKILL.md`, `guides/voice/SKILL.md`,
-   `guides/sound/SKILL.md`.
+   `guides/sound/SKILL.md`, `guides/hyper/SKILL.md` (the beat-locked hyper language),
+   `guides/components/SKILL.md` (prebuilt snapcn components, MIT).
 
 ## Files in the user's project
 ```
@@ -63,6 +69,9 @@ own components), real commands and what they print, real prices from the code, a
 From a prompt, the same list from the prompt, with every gap as `[NEED: …]`. Prices or claims about
 competitors are checked on the competitors' own sites and footnoted with the date; never from memory.
 
+**1b. References.** If the user sent videos or prompts they like, break each down with
+`bash <skill>/tools/analyze-ref.sh <video>` and write its TECHNIQUES.md (`guides/references/SKILL.md`).
+
 **2. Direction (the most important review).** The worker fills the header and DIRECTIONS of
 `templates/storyboard.md` following `guides/direction/SKILL.md`: three directions that differ in concept and
 structure, a recommendation, and the check against the defaults list. The frontier picks one, or
@@ -75,8 +84,11 @@ approves them or sends exact fixes.
 from the direction in `video/src/theme.ts`, and put the logo in `video/public/`. Write the script lines from the
 storyboard into `video/src/script.ts`.
 
-**4. Voice and sound.** With an ElevenLabs key in `video/.env` (`ELEVENLABS_API_KEY=…`), run
-`bun run voice` and `bun run sfx` (`guides/voice/SKILL.md`, `guides/sound/SKILL.md`). The voice writes the time
+**4. Music, voice and sound.** Get the music first (`guides/sound/SKILL.md`: the user's track, then
+ElevenLabs Music on a paid plan, then a library, then `scripts/synth-music.sh`), set its tempo in
+`src/beat.ts`, and time scenes in beats. With an ElevenLabs key in `video/.env`
+(`ELEVENLABS_API_KEY=…`), run `bun run voice` and `bun run sfx` (`guides/voice/SKILL.md`); without
+one, `scripts/synth-sfx.sh` is the fallback. The voice writes the time
 of every word, so scenes last as long as their line and motion lands on words (`at(id, word)`).
 Without a key, timings are estimated from the text and the video still renders silent.
 
