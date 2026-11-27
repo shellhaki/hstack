@@ -61,6 +61,7 @@ Frontier tokens cost far more than small-model tokens, and the expensive part of
 | [`hstack-research`](skills/hstack-research/SKILL.md) | skill, `/hstack-research` | Market and technical research: workers read the web and write sourced notes, the frontier writes one report with a recommendation |
 | [`hstack` guides](skills/hstack/ROUTES.md) | guides | How the model thinks (solo, or as the worker), read one at a time from a routing table: understand, explore, plan, sources, focus, verify, escalate, plus practice, debug and refactor |
 | [Go guide](skills/hstack/languages/go/SKILL.md) | language guide | Routed from `ROUTES.md` on any Go task, solo or team: always-on Go rules plus 17 topics (errors, concurrency, testing, security, database, performance, …), compiled from [samber/cc-skills-golang](https://github.com/samber/cc-skills-golang) (MIT) |
+| [TypeScript guide](skills/hstack/languages/typescript/SKILL.md) | language guide | Routed from `ROUTES.md` on any TypeScript task: conventions observed in vscode, TypeScript, angular and next.js (commit format, strictness scoping, avoiding `any`, typecheck before claiming), each traced to real commits and configs |
 | [Evals](evals/README.md) | hardening loop | Small tasks with hidden tests, run with and without hstack; failures become guide rules |
 | [`hstack-worker`](agents/hstack-worker.md) | sub-agent | Plans, then builds and reports, in two phases |
 | [`hstack-researcher`](agents/hstack-researcher.md) | sub-agent | Answers one research question from the web, with sourced notes |

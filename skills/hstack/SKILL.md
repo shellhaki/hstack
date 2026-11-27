@@ -62,7 +62,7 @@ For each numeric input, first say what it **is** (a count, an amount, a share, a
 | A date for a user | the user's time zone, not the server's |
 
 ## 4. Triggers (any size)
-- Go code: `languages/go/SKILL.md`.
+- Go code: `languages/go/SKILL.md`. TypeScript code: `languages/typescript/SKILL.md`.
 - A schema change, migration or bulk write: `engineering/data/SKILL.md`.
 - A handler taking input or touching another user's data: `engineering/security/SKILL.md`.
 - A failure you can't explain after one look: `engineering/debug/SKILL.md`.

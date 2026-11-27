@@ -62,6 +62,7 @@ follow its topic table. Log it as a ROUTE.
 | Files | Read |
 |---|---|
 | `.go`, `go.mod`, `go.work` | `languages/go/SKILL.md` |
+| `.ts`, `.tsx`, `tsconfig*.json` | `languages/typescript/SKILL.md` |
 
 More languages will be added here. For a language not listed, the general guides still apply.
 
