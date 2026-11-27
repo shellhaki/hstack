@@ -28,20 +28,42 @@ are adapted from tasteskill by [Leonxlnx](https://github.com/Leonxlnx/taste-skil
 - Status and helper text use the body font at the muted color, in sentence case.
 - One display face and one text face (they may be the same family); no third font for "flavour".
 
+## No formula landing pages
+These read as generated and bore people. Don't build them unless the user asks for that layout:
+- **The stock hero:** a pill badge ("Free · Open source · MIT"), a three-line headline with one
+  colored word, a grey subline, two buttons ("Try the demo" + "See how it works"), and a card floating
+  on the right.
+- **Decorative noise behind the hero:** diagonal streaks, shooting-star lines, beams, glowing orbs,
+  dot or line grids. (No grids, ever, unless the user explicitly asks for one.)
+- **The default dark-tech look:** near-black with one generic blue, indigo or violet accent and a glow.
+- **The section conveyor:** hero → logo strip → three feature cards → steps → testimonials → pricing →
+  CTA band → footer, every section the same width and rhythm.
+
+Instead, build the page from the product's own material and concept (`guides/design-principles/SKILL.md`,
+section 0): what the product actually is and does decides the first screen. One strong idea per section,
+varied rhythm (full-bleed, narrow, split), and at least one section that only this product could have.
+
 ## Layout
 - Equal left and right edges on every section; one content width (taste).
 - Not everything centered: centered only for a short hero or a single call to action.
 - One primary action per view. Secondary actions are visually quieter.
 - Every page works at 390px wide with no horizontal scroll.
 
+## No mocks (unless the user explicitly asks)
+- **No simulated product:** no "Live demo · simulated" widgets, no fake signup boxes that pretend to
+  call an API, no invented counters ("483 people joined"), no "Try the demo" or "Take a number" call
+  to action. A page that fakes the product looks like a template and makes the real product look
+  fake. Add one only when the user explicitly asks for a demo.
+- Show the **real** product instead: a real screenshot or screen recording, real code with its real
+  output (copied from the project), a real number from the project's data with its source.
+- No placeholder product made of grey boxes either: the real screen, or a marked `[NEED: screenshot of …]`.
+
 ## Show, don't tell
-- **No grids of static text boxes** (title plus description) to explain features or steps. Each box is
-  the feature working: a small interactive demo with sample data, built from registry components.
-  For example: grammar correction as a before/after toggle on a real sentence; filler removal as a
-  transcript where the fillers strike through; pacing as a live slider over a waveform; voices as a
-  toggle group that changes a preview; take comparison as tabs between two takes.
-- **Steps sections:** not numbered text boxes. One interactive walkthrough (tabs, a stepper or a
-  segmented control) where choosing a step changes a single preview of the product.
+- **No grids of static text boxes** (title plus description) to explain features or steps. Show each
+  feature with the real product: a cropped real screen, a real request and its real response, a short
+  recording, a before/after of real output.
+- **Steps sections:** not numbered text boxes. One walkthrough (tabs or a stepper) where each step shows
+  the real screen or the real command and output for that step.
 - A text-only card is allowed only for content that has nothing to show (a quote, a legal note).
 
 ## Motion and imagery

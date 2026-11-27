@@ -24,11 +24,11 @@ no setup: run it with `npx shadcn@latest <command>` from the project root.
 - Other registries the user names (for example `@magicui`): `npx shadcn@latest search @<registry> -q "…"`.
   Use only registries the user or `DESIGN.md` names.
 
-## Interactive demos (features and steps)
-Build each feature demo from registry parts, wired to sample data: `tabs`, `toggle-group`, `slider`,
-`switch`, `accordion`, `hover-card`, `progress`, `chart`, `carousel`, `resizable`. Search the registry
-for blocks first ("feature section", "interactive"); compose from components when no block fits.
-State lives in the page with sample data only; no backend calls on a marketing page.
+## Showing features (no mock demos)
+Show features with the real product: real screenshots, recordings, or real code with its real output,
+arranged with registry parts (`tabs`, `toggle-group`, `carousel`, `hover-card`, `resizable`) so the
+visitor can switch between real views. Never a simulated demo ("try it", fake inputs that pretend to
+call an API, invented numbers) unless the user explicitly asks for one (`guides/anti-slop/SKILL.md`).
 
 ## Every interactive element is a registry part
 Before writing JSX, map each element to its part and install it first: a clickable thing is `Button`

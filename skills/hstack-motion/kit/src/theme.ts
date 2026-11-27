@@ -22,7 +22,7 @@ export const brand = {
 export const stage = {
   background: brand.paper,
   text: brand.ink,
-  pattern: "none" as "none" | "dots" | "grid" | "lines",
+  pattern: "none" as "none" | "dots" | "grid" | "lines", // keep "none": no grid textures unless the user asks
   glow: false,
   grain: 0, // 0 to 0.08
 };

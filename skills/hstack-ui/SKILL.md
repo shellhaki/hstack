@@ -18,6 +18,10 @@ CONTRAST: node <skill>/tools/contrast.mjs <css> → <exit 0>  (only if colors or
 SCREENS: <the screenshot files of every changed page; 1440, and 390 for M and up>
 REVIEW: guides/review/SKILL.md run on the screens → <issues found and fixed, or none>
 COPY: checked against vendor/taste-skill/copy-tells.md → <changes>
+NO MOCKS: no simulated demos, "Try the demo" CTAs or invented numbers (unless the user asked) → <ok>
+NOT A FORMULA: first screen built from the product's concept, not the stock hero (guides/anti-slop) → <how>
+COLOR: chosen from the product (logo / brand / domain), 2–3 candidates in DESIGN.md, no default blue-violet → <ok>
+SCROLL: Lenis smooth scrolling on marketing pages, reduced-motion fallback (guides/scroll) → <ok | n/a: app screen>
 ```
 Skipping the screenshots because "it's just CSS" is the most common miss: the review is what catches
 broken layouts.

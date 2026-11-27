@@ -37,7 +37,7 @@ slowly: hyper trades understanding for energy.
 ## The vocabulary (build each once in `motion.ts` / `kit.tsx`, reuse)
 | Effect | How | Sound |
 |---|---|---|
-| Slam | a word or shape scales from 1.3 to 1 in 3–4 frames (no camera shake) | sub hit + transient |
+| Settle | a word or shape rises and scales from 1.08 to 1 over 12–18 frames with a soft spring | soft tick |
 | Speed lines | thin lines streaking in the motion's direction for 6–10 frames | whoosh |
 | Split screen | 2–3 flat color panels, each with a different freeze of the subject | one hit per panel |
 | Stamp / target lock | a ring snaps around the subject with UI brackets and ticks | lock beep |
@@ -46,22 +46,22 @@ slowly: hyper trades understanding for energy.
 | Shatter panes | flat color panes break away one by one revealing the next | glass shard |
 | Speed ramp | slow a move to 30% at its key pose for 6–10 frames, then snap back | tape-stop / reverse swell |
 | Overexpose | the peak shot blooms to white for 4–8 frames | riser into impact |
-| Textures | checker tiles, halftone dots, city or blueprint grids, UI ticks, barcodes | — |
+| Textures | only if the user asks: halftone, checker tiles, UI ticks. **Never a grid** (dot, line or blueprint) unless the user explicitly asks for one | — |
 
-## Every frame is a poster
-Hyper is 80% graphic design. Pause on any frame: it must work as a designed poster, not as "text on a
-background". A frame that is one line of type centered on a flat color is a failure, however well it
-moves.
-- **At least three layers** in every frame: a field (flat color, split, or texture: checker, halftone,
-  grid, speed lines), the subject (giant type, the product element), and marks (corner labels in mono,
-  a ticking timecode or beat counter, barcodes, brackets, stamps). Build the marks once as a frame
-  overlay and keep it on every shot.
-- **Scale contrast:** giant type cropped off the frame edge next to small mono labels. Never only
-  mid-sized type.
-- **Composed, not centered by default:** use an asymmetric grid (thirds, a strong left column, a
-  diagonal). Center only for the peak and the logo.
-- **Bold strokes:** at 1080p, rings, brackets and rules are 8–24 px or filled shapes. A 2–5 px hairline
-  alone on a flat field looks unfinished.
+## Cool, not violent
+"Hyper" means energy and rhythm, not noise. The target is cool, smooth and easy on the eye: the
+viewer should feel the beat, not get hit by it.
+- **Stay in the brand's palette.** Its background, its one accent, and greys. No extra bright fields
+  (green, red, white) that the product doesn't use; status colors only as small details.
+- **No decorative marks.** No corner labels, timecodes, beat counters, barcodes or registration
+  marks unless the brand itself uses them. They read as bloat.
+- **Smooth motion.** Eased moves of 12–30 frames and soft springs; slams are rare (one or two per film)
+  and still eased. Energy comes from the morph chain and the cutting rhythm, not from impact.
+- **Calm frames, strong composition:** dark field, one big subject, generous space, one accent. Scale
+  contrast (big type with a small label) and an off-center layout still matter; texture is optional
+  and subtle (a soft gradient at most). **No grids, ever,** unless the user explicitly asks.
+- **Sound:** soft transients (ticks, blips, swooshes) on most actions; a deep hit only at the one or
+  two moments that matter. Not an impact on every beat.
 
 ## Things that make a hyper frame ugly (never ship these)
 - **A line crossing through text.** Rings, rules and shapes must clear type by at least 40 px, or the

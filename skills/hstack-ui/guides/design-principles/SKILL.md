@@ -114,8 +114,8 @@ art that belongs only to it: Brimble's engraved bee, Stripe's ribbon gradients, 
 Resend's black 3D cube, Vercel's lit triangle, Figma's community collage.
 
 How to choose:
-- Hero: the product's main screen, built from the same registry components the app uses, with real
-  sample data from the brief. A product without a screen yet: its material from step 0 (a waveform,
+- Hero: the product's real main screen (a real screenshot or recording, or the app's own components
+  showing real data from the brief), never a simulated demo. A product without a screen yet: its material from step 0 (a waveform,
   a receipt, a map), or `[NEED: product screenshot]`.
 - Brand art: **one** motif from the product's material or name, used in the hero and echoed once at
   the end of the page. It comes from the user's assets or a motion registry background

@@ -18,8 +18,8 @@ one before the composition's length (Remotion prints the length on an out-of-ran
       for another product's video? If yes, it fails.
 - [ ] Fills the frame: the subject is large, UI is cropped and scaled up, no shot mostly empty.
 - [ ] No line or shape crosses through text; no fake glyph parts; no half-faded type lingering.
-- [ ] Hyper: every frame works as a poster (field + subject + marks, scale contrast, composed layout);
-      see `guides/hyper/SKILL.md`, "Every frame is a poster".
+- [ ] On brand and calm: only the brand's palette; no decorative marks (corner labels, timecodes,
+      barcodes); motion smooth and easy on the eye (`guides/hyper/SKILL.md`, "Cool, not violent").
 - [ ] Every element is inside the frame and nothing overlaps by accident (long text in bubbles wraps).
 - [ ] At most two lines of text on screen; every word readable at phone size.
 - [ ] The brand color is only fills on light backgrounds; contrast is fine.

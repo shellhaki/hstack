@@ -10,6 +10,17 @@ disable-model-invocation: true
 A palette is chosen once, in `DESIGN.md`, from real sources, and checked by a script. Never pick
 colors from memory ("a nice indigo"), and never take a reference site's colors.
 
+## 0. Start from the product, not from a default
+- **What the product already has decides first:** its logo, an existing brand color, its domain
+  (money, health, developer tools, kids), its material (paper, metal, plants, terminals). Pull the hex
+  values from the logo file when there is one.
+- **Banned defaults** (they mark a page as generated): a generic blue, indigo or violet accent
+  (Tailwind blue-500/600, indigo-500, violet-500 and their neighbours) on near-black; blue-to-purple
+  gradients; neon glows as the main color. Use them only when the brand itself is that color.
+- **Write 2–3 candidate palettes** in `DESIGN.md`, each with the product line it follows from and its
+  contrast results, then choose one and say why. Check the chosen accent next to the logo: they must
+  belong together.
+
 ## 1. Pick a starting point (one of these)
 - **Curated palettes (default):** `<skill>/vendor/taste-skill/palettes.json`, by `id`, matched to the
   trade.

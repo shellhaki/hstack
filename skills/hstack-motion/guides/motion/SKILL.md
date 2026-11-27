@@ -61,7 +61,7 @@ Techniques that make a product film feel organic (build them for your concept; n
 - **Proof beat:** one number against a bar or a before/after, counted up on the beat.
 - **Dolly into the UI:** the camera moves into a panel of the real app, the rest falling out of focus.
 Hyper-language techniques are in `guides/hyper/SKILL.md`. Techniques that fit other concepts and are not in the kit
-(build them): a camera traveling across one large canvas, paper pinning and folding, a grid filling
+(build them): a camera traveling across one large canvas, paper pinning and folding, a table filling
 cell by cell, a map zooming to a place, a cursor driving the real UI, a split screen, type set along
 a path, a counter that becomes a chart.
 

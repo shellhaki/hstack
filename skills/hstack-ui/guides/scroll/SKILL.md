@@ -12,8 +12,9 @@ It is a `DESIGN.md` choice (Motion section: `Scroll: Lenis` or `Scroll: native`)
 default.
 
 ## When
-- **Use it** on marketing and editorial pages with scroll-linked motion (reveals, sticky product
-  walkthroughs, parallax in the background `DESIGN.md` names).
+- **Use it by default** on every marketing, landing and editorial page: smooth scrolling is part of
+  the finish, with or without scroll-linked motion (reveals, sticky product walkthroughs, parallax).
+  Always with the reduced-motion fallback below.
 - **Don't** on app screens, dashboards, docs, forms, or anything with its own scroll areas (tables,
   chat, code). Native scrolling is faster to use there.
 

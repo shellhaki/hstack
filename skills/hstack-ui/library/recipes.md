@@ -4,7 +4,7 @@ What each kind of page contains, in order. Build from library components; style 
 
 | Page | Sections, in order | Notes |
 |---|---|---|
-| Marketing landing | header, hero (one claim, one action, the real product), proof (logos or one quote, only if real), features as interactive demos, how it works as one interactive walkthrough, pricing teaser or CTA, footer | one section per screen height; see anti-slop "Show, don't tell" |
+| Marketing landing | header, a first screen built from the product's own concept and its real product, proof (only if real), features shown with the real product, how it works as one walkthrough of real screens or commands, pricing teaser or call to action, footer | not the stock hero or the section conveyor (anti-slop "No formula landing pages"); no mock demos; vary the section rhythm; smooth scrolling (`guides/scroll/SKILL.md`) |
 | Pricing | header, 2 to 4 tier cards (one highlighted), comparison table, FAQ, CTA | prices only from the brief |
 | App shell | sidebar (nav, then account), header (title, primary action), content | sidebar collapses to a sheet on phone |
 | List + detail | filters row, table or list, row opens a sheet or a detail page | table if 3+ attributes or 7+ rows |

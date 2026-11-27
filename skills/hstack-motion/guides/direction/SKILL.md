@@ -28,7 +28,7 @@ the site." A concept that would fit any product ("words slam in, then the logo")
 ## 2. Look: choose each part from the brand and the concept
 | Choice | Options (pick, don't default) |
 |---|---|
-| Stage | brand color full-bleed · dark · paper · a texture from the concept (paper grain, corkboard, blueprint grid, screen glow) · the product UI itself as the background |
+| Stage | brand color full-bleed · dark · paper · a texture from the concept (paper grain, corkboard, screen glow) · the product UI itself as the background |
 | Type | the product's own display font, large: headlines fill a third of the frame or more. Body text in a video is at least 40 px at 1080p |
 | Color | the brand's colors, plus at most one accent from the concept. The brand color may be the background, the type or fills; check contrast |
 | Framing | flat 2D graphic · 3D space with depth · close crops of real UI (a cropped part at 2–3× scale beats a whole screen at 1×) · split screen · one continuous shot |
@@ -76,6 +76,8 @@ product. Recommend one. The frontier approves or picks another before any scene 
 ## The defaults that make every video the same
 None of these may appear unless the chosen direction explicitly calls for it, with a reason:
 - Off-white paper with a dot grid and a colored glow at the bottom (the kit's old default stage).
+- **Any grid texture** (dots, lines, blueprint, city grid) as a background. Never, unless the user
+  explicitly asks for one; a CHECK reason doesn't override this.
 - The name spinning in on slot reels after "Introducing".
 - Generic chat windows filling with messages to show "the problem".
 - Three words slammed one by one ("Copied. Pasted. Forgotten.").
