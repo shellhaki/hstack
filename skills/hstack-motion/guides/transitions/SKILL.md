@@ -7,6 +7,24 @@ disable-model-invocation: true
 
 # Transitions
 
+## First choice: one element becomes the next screen
+The best handover is no transition at all: **an element of this scene turns into the next scene.**
+A dot grows into a lock; the lock fills the frame and becomes the next color field; a word shrinks
+into the terminal it names; a ✓ swells into the shape the next scene is made of; a log line's
+underline shoots out and becomes a bar, then a shockwave. The viewer's eye follows the element, so
+the cut never registers as a cut.
+
+Plan it in the storyboard: every row's "Into this scene" column says **"X becomes Y"**. To build one:
+1. Pick the element on screen at the end of the scene that best matches a shape in the next one.
+2. Over 0.4–1 beat, animate its position, size, radius and color to the next scene's shape
+   (`lerp` with an ease), while everything else in the old scene fades or flies away.
+3. The next scene starts *as* that shape, then reveals its own content.
+
+Use the stock transitions below only when no element can carry over, and say why in the storyboard.
+Never use a plain crossfade.
+
+## Stock transitions (fallback)
+
 The direction's motion language decides how scenes hand over: a continuous-camera video has no
 transitions, only camera moves; an editorial one uses few and slow ones; a mechanical one may cut
 hard on a beat. When scenes do hand over, the kit's four are a starting point.
