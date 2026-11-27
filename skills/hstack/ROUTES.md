@@ -7,6 +7,21 @@ guide **when its row applies**, not all at once. The guides are in this folder (
 Every guide ends with a file you must write. Keep these files in `.hstack/work/` in the project:
 they are your working memory, and the senior reads them to check your work. Don't commit them.
 
+## First: the size in the brief
+The brief says `SIZE: S`, `M` or `L` (no size means M). The size decides how much of the process
+below you run. Process is a tool for hard tasks; on easy ones it only costs time.
+
+| Step | S | M | L |
+|---|---|---|---|
+| understand → `TASK.md` | in your head; no file | short: criteria and RISKY assumptions | full |
+| explore → `MAP.md` | only the files you touch; reuse `.hstack/MAP.md` | reuse `.hstack/MAP.md`, add this task's part | full |
+| plan → `PLAN.md` | no | short, then **build without waiting** | full, then wait for approval |
+| focus → `PROGRESS.md` | the phase stamps and attempts only | full | full |
+| verify → `EVIDENCE.md` | steps 1, 2 and 5 | all steps; step 4 for the main criterion only | all steps |
+
+**Turn budget:** the brief's `BUDGET` (default S 15, M 40, L 80 turns). At the budget, stop and send
+your report with what is done and what is left, or a `QUESTION`. Don't grind on.
+
 ## Always, in this order
 
 | When | Read | You write |

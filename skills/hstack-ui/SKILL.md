@@ -3,7 +3,7 @@ name: hstack-ui
 description: UI work under hstack. Use for /hstack-ui or whenever a task builds, restyles or reviews any interface (landing pages, app screens, dashboards, settings, forms). The worker writes a design system from compiled design principles (learned from nine strong products), builds only from that system and a component library, and the frontier reviews screenshots before anything is accepted.
 purpose: Production-grade UI from a small model, with no invented styling (no "AI slop").
 author: shellhaki
-version: 0.4.0
+version: 0.5.0
 ---
 
 # hstack-ui
@@ -35,6 +35,21 @@ colors from palette sources checked by a script (`guides/color.md`), icons from 
   screens/<page>/      screenshots of what the worker built, for review
 ```
 Add `.hstack/ui/references/` to `.gitignore`: those are other sites' screenshots, reference only.
+
+## Fast path (most UI tasks)
+Once `.hstack/ui/DESIGN.md` is approved and the theme is in place, UI work is ordinary hstack work
+sized S or M (`hstack` skill, step 0): a new section, a restyle, a form, one page. For those:
+- Skip steps 1 to 4 entirely. Don't reread the principles, don't capture any site, don't touch the
+  theme.
+- The worker reads `DESIGN.md` and `library/recipes.md` (only the recipe it needs), builds (step 5),
+  runs `check-prebuilt.mjs` and the project's checks.
+- **Screenshots: one contact sheet for the whole task,** not one review per page. S: the changed
+  pages at 1440 only. M: at 1440 and 390. A plain full-page screenshot is enough (`--no-tiles` skips the section tiles):
+  `node <skill>/vendor/taste-skill/shoot.mjs --url <url> --w 1440 --no-tiles --out .hstack/ui/screens/<page>-1440.png --profile .hstack/ui/.chrome`
+- The frontier reviews the sheet once, with `guides/review.md`.
+
+Use the full loop below only for a new project (no `DESIGN.md`), a redesign, or a change to
+`DESIGN.md` itself.
 
 ## The loop
 
@@ -72,7 +87,7 @@ into `templates/design-system.md`'s template. The frontier reviews the text agai
 `guides/design-principles.md` and approves it or sends exact fixes before any page is built: a wrong
 system makes every page wrong. The user can edit `DESIGN.md` at any time; it stays the single source.
 
-**4. Theme.** The worker turns `DESIGN.md`'s tokens into the library's theme variables once
+**4. Theme (once per project, or after `DESIGN.md` changes).** The worker turns `DESIGN.md`'s tokens into the library's theme variables once
 (`--background`, `--foreground`, `--primary`, `--muted`, `--border`, `--radius`, fonts), then runs
 `node <skill>/tools/contrast.mjs <the css file>`, which must exit 0 (`guides/color.md`).
 

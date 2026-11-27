@@ -4,6 +4,9 @@
 they didn't run, a test that can't fail, a criterion they forgot. A strong engineer tries to prove
 themselves wrong before anyone else does. This guide is that habit as steps.
 
+**By size** (the brief's `SIZE`): S runs steps 1, 2 and 5. M runs all steps, with step 4 only for
+the main criterion. L runs everything.
+
 ## Steps
 1. **Run every done command** from the brief and `MAP.md`. Record the real counts: passed, failed,
    skipped. Compare with the baseline in `MAP.md`: any new failure is yours.

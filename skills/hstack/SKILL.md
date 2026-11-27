@@ -3,7 +3,7 @@ name: hstack
 description: Senior-engineer mode. Use for /hstack (turns it on for the session and picks the smaller worker model) and, once it is on, for real implementation work (features, multi-file changes, test suites); skip it for one-line fixes and questions. The frontier writes the brief, a smaller worker plans, builds and tests, and the frontier reviews and corrects.
 purpose: Same results as the frontier model alone at about half the cost (measured 53% cheaper on benchmark 2).
 author: shellhaki
-version: 0.3.0
+version: 0.4.0
 ---
 
 # hstack: senior engineer mode
@@ -48,8 +48,26 @@ Each guide makes the worker write a file in `.hstack/work/`:
 Review these short files instead of trusting the report; they're cheap to read and show where its
 thinking went wrong.
 
-## 0. Size gate
-Delegate only when the task needs real implementation work: new features, multi-file changes, test suites. For a one-line fix, a question or a tiny edit, do it yourself. Delegating costs more than it saves there.
+## 0. Size the task
+For a one-line fix, a question or a tiny edit, do it yourself: delegating costs more than it saves.
+Otherwise give the task a size. The size sets how much process the worker runs, so small work stays
+fast:
+
+| Size | Typical task | Worker runs | Your checkpoints | Turn budget |
+|---|---|---|---|---|
+| **S** | one component, a restyle, a small endpoint, a contained bug | one pass: build, then a short verify. Writes only `EVIDENCE.md` | the done report | 15 |
+| **M** | a feature over a few files | plans and builds in one go; stops only on a STOP IF | the done report (the plan is in it) | 40 |
+| **L** | a new subsystem, a migration, auth, money, data, many files | the full loop: plan, wait for approval, build | plan approval, then the done report | 80 |
+
+Pick the smallest size whose risks you can still review afterwards. A wrong S costs one correction
+round; an unneeded L costs a round trip and a whole planning phase.
+
+**Parallel by default (M and L):** if the brief has parts that touch different files (a page and an
+API, a banner and a policy page), start one worker per part at the same time instead of one after the
+other (`hstack-swarm`).
+
+**Timing:** the worker stamps each phase in `PROGRESS.md`. When a task feels slow, read those stamps
+before changing the process.
 
 ## 1. Brief (you, at most about 15 lines)
 ```
@@ -59,11 +77,16 @@ WHAT (acceptance criteria, numbered, testable; point to existing docs or specs i
 CONSTRAINTS: <stack, off-limits files, no new deps, ...>
 RISKS I WILL REVIEW: <auth, data loss, money, user-facing output, ...>
 DONE WHEN: <exact commands, e.g. npm test, tsc>
+SIZE: S | M | L   BUDGET: <turns, default from the size table>
+STOP IF: <what must come back to you before it's built, e.g. "a new dependency", "a schema change"; M only>
 ```
 DONE WHEN must include the tests that cover every changed file. A typecheck alone never counts: it misses changed strings, names, paths and IDs. For a bulk or scripted edit (rename, find-and-replace, codemod), require a test baseline before the edit and the tests of every touched package after each batch, with no new failures.
 
-## 2. Plan (worker)
-Start the worker (see "Delegation by harness" below) with the brief plus "Phase 1: plan only." The worker explores, writes `PLAN.md`, and returns a plan report of at most 20 lines.
+## 2. Plan (worker; size L only)
+**S and M skip this step:** start the worker with the brief plus "Build." and go to step 3. An M
+worker writes its plan, builds without waiting, and stops only when a STOP IF line applies.
+
+For **L**, start the worker (see "Delegation by harness" below) with the brief plus "Phase 1: plan only." The worker explores, writes `PLAN.md`, and returns a plan report of at most 20 lines.
 
 Review it against your criteria and risks. If something looks off, open `.hstack/work/TASK.md`
 (missed implied requirements, a wrong RISKY assumption) or `MAP.md` (wrong template, no baseline).
@@ -100,14 +123,15 @@ Don't commit or push unless asked.
 **Claude Code.** Start the worker with the Agent tool: `subagent_type: "hstack-worker"`, `model: "<worker alias>"`. Send APPROVE, REVISE and corrections to **the same worker** with SendMessage, so it keeps its context.
 
 **Muse Code.** Use `agent()` in `muse.workflow`: `agentType: "general-purpose"`, `model: "<worker id>"`, and an `input` that starts with "Follow `<home>/agents/hstack-worker.md` as your instructions." followed by the brief. A Muse child can't be messaged again, so each step is a new child that reads the files the last one left:
-- **Plan:** "Phase 1: plan only." The child writes `.hstack/work/` (`TASK.md`, `MAP.md`, `PLAN.md`) and returns its plan report.
+- **S and M:** one child with the brief and "Build.". No separate plan child.
+- **Plan (L):** "Phase 1: plan only." The child writes `.hstack/work/` (`TASK.md`, `MAP.md`, `PLAN.md`) and returns its plan report.
 - **Build:** a new child with the brief, "Phase 2: build. Read `.hstack/work/PLAN.md`.", and your `APPROVE` or `REVISE` lines. Pass the plan child's `result.ref` so it can read the plan report.
 - **Correction:** a new child with the brief, the done report's `ref`, and your exact correction.
 Use `isolation: true` only for parallel work (see `hstack-swarm`); a single worker shares your checkout.
 
-**Codex.** Ask Codex to spawn the custom agent `hstack_worker` with `model: "<worker id>"` and the brief as its task, with "Phase 1: plan only." Send APPROVE, REVISE and corrections as follow-up input to the same agent thread, so it keeps its context. The reviewer is `hstack_reviewer`.
+**Codex.** Ask Codex to spawn the custom agent `hstack_worker` with `model: "<worker id>"` and the brief as its task, with "Build." (S, M) or "Phase 1: plan only." (L). Send APPROVE, REVISE and corrections as follow-up input to the same agent thread, so it keeps its context. The reviewer is `hstack_reviewer`.
 
-**Hermes Agent.** Start the worker as a separate `hermes chat` process on the worker model: `hermes chat -m "<worker id>"` (`-p <profile>` to target a profile, `--in <dir>` to scope the worktree, `-s hstack` to preload this skill), with an input that starts with "Follow `<home>/agents/hstack-worker.md` as your instructions." followed by the brief. A Hermes worker can't be messaged again, so each step is a new process that reads the files the last one left (same shape as Muse Code above: plan process, then a build process reading `.hstack/work/PLAN.md`, then a correction process). Paste the previous report inline: Hermes has no result refs. Use `-w` only for parallel work (see `hstack-swarm`); a single worker shares your checkout.
+**Hermes Agent.** Start the worker as a separate `hermes chat` process on the worker model: `hermes chat -m "<worker id>"` (`-p <profile>` to target a profile, `--in <dir>` to scope the worktree, `-s hstack` to preload this skill), with an input that starts with "Follow `<home>/agents/hstack-worker.md` as your instructions." followed by the brief. A Hermes worker can't be messaged again, so each step is a new process that reads the files the last one left (same shape as Muse Code above: S and M are one build process; L is a plan process, then a build process reading `.hstack/work/PLAN.md`, then a correction process). Paste the previous report inline: Hermes has no result refs. Use `-w` only for parallel work (see `hstack-swarm`); a single worker shares your checkout.
 
 ## Token discipline
 - Never read whole diffs or logs. Trust the worker's tests and spot-check your risk areas.

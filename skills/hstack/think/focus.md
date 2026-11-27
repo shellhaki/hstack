@@ -8,6 +8,7 @@ approach early. Do the same, deliberately.
 Update it after every step, and **reread it before every step** and after any long command output.
 ```
 GOAL: <from TASK.md, one line>
+TIMES: understand <hh:mm> · explore <hh:mm> · plan <hh:mm> · build <hh:mm> · verify <hh:mm> · report <hh:mm>
 STEP: <current step number from PLAN.md> — <what>
 DONE: <steps finished, with the check that passed>
 NEXT: <the next step>
@@ -16,6 +17,8 @@ ATTEMPTS (current problem):
 SOURCES READ: <file / command> — <fact learned>
 NOTICED, NOT DONE: <unrelated issues you saw; report them, don't fix them>
 ```
+
+Stamp each phase when it starts (`date +%H:%M`). The senior uses the stamps to find where time goes.
 
 ## Attempt rules
 An attempt is one change followed by the check that should prove it.
@@ -30,6 +33,7 @@ An attempt is one change followed by the check that should prove it.
 - You are editing the same lines back and forth.
 - You are adding a retry, a sleep, a longer timeout or a broader type to make an error go away.
 - Your last three steps didn't move a check from failing to passing.
+- You are near the brief's turn `BUDGET` (see `ROUTES.md`).
 
 When you stop: reread `PROGRESS.md` and `TASK.md`, write what you know and what you don't, then choose
 a new approach or escalate.
