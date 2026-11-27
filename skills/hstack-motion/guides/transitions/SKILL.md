@@ -21,7 +21,7 @@ Plan it in the storyboard: every row's "Into this scene" column says **"X become
 3. The next scene starts *as* that shape, then reveals its own content.
 
 Use the stock transitions below only when no element can carry over, and say why in the storyboard.
-Never use a plain crossfade.
+Never use a plain crossfade, camera shake, a white or color flash, or a glitch as a transition.
 
 ## Stock transitions (fallback)
 

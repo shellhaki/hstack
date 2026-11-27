@@ -28,15 +28,16 @@ slowly: hyper trades understanding for energy.
 - **Type is readable before anything overlaps it.** Hold a word at least 6–8 frames clean at 60 fps.
 - **Graphic matches:** end a cut on a shape that the next cut starts from (a letter becomes a stamp,
   a circle becomes a lens, a bar becomes a wipe).
-- **Foreground wipes:** something large crosses the lens to hide the cut (a panel, a card, the
-  product's own element).
+- **The only transition is a morph:** one element of this shot becomes the next shot (a stamp becomes
+  a lock, a lock fills the frame as the next field, a word rolls letter by letter into the next word,
+  a ✓ swells into the next layout, a line becomes a bar). See `guides/transitions/SKILL.md`.
+- **Banned as transitions:** camera shake, white or color flashes, RGB-split glitches, hard cuts
+  between unrelated shots. They read as cheap. Don't use shake or flashes at all unless the user asks.
 
 ## The vocabulary (build each once in `motion.ts` / `kit.tsx`, reuse)
 | Effect | How | Sound |
 |---|---|---|
-| Slam | a word or shape scales from 1.3 to 1 in 3–4 frames with a 2–3 px camera shake | sub hit + transient |
-| Shutter flash | one or two frames of white (or the accent) between cuts | soft click or air |
-| RGB split | offset red/blue copies of the layer by 4–12 px for 2–4 frames | glitch tick |
+| Slam | a word or shape scales from 1.3 to 1 in 3–4 frames (no camera shake) | sub hit + transient |
 | Speed lines | thin lines streaking in the motion's direction for 6–10 frames | whoosh |
 | Split screen | 2–3 flat color panels, each with a different freeze of the subject | one hit per panel |
 | Stamp / target lock | a ring snaps around the subject with UI brackets and ticks | lock beep |
@@ -46,6 +47,35 @@ slowly: hyper trades understanding for energy.
 | Speed ramp | slow a move to 30% at its key pose for 6–10 frames, then snap back | tape-stop / reverse swell |
 | Overexpose | the peak shot blooms to white for 4–8 frames | riser into impact |
 | Textures | checker tiles, halftone dots, city or blueprint grids, UI ticks, barcodes | — |
+
+## Every frame is a poster
+Hyper is 80% graphic design. Pause on any frame: it must work as a designed poster, not as "text on a
+background". A frame that is one line of type centered on a flat color is a failure, however well it
+moves.
+- **At least three layers** in every frame: a field (flat color, split, or texture: checker, halftone,
+  grid, speed lines), the subject (giant type, the product element), and marks (corner labels in mono,
+  a ticking timecode or beat counter, barcodes, brackets, stamps). Build the marks once as a frame
+  overlay and keep it on every shot.
+- **Scale contrast:** giant type cropped off the frame edge next to small mono labels. Never only
+  mid-sized type.
+- **Composed, not centered by default:** use an asymmetric grid (thirds, a strong left column, a
+  diagonal). Center only for the peak and the logo.
+- **Bold strokes:** at 1080p, rings, brackets and rules are 8–24 px or filled shapes. A 2–5 px hairline
+  alone on a flat field looks unfinished.
+
+## Things that make a hyper frame ugly (never ship these)
+- **A line crossing through text.** Rings, rules and shapes must clear type by at least 40 px, or the
+  type sits on its own solid plate in front of them. Check the widest word against the shape's size.
+- **A fake glyph part.** A circle standing in for a period, a box for an "i" dot: it never matches the
+  font's baseline, size and spacing. Use the real glyph, or make the shape clearly its own element
+  (a stamp, a seal) that doesn't pretend to be part of the word.
+- **Half-faded type lingering.** Letters at 40–90% opacity for more than 3–4 frames read as mistakes.
+  Type is either in, or moving fast.
+- **Empty frames:** more than half the frame flat and unused, with nothing to anchor the eye.
+- **A shape over type at the peak:** shockwave rings, bursts or rules drawn across the hero word.
+  The hero word owns the frame; effects go behind a solid plate or stay clear of it.
+- **Mismatched families:** mono and sans mixed inside one word, or one-off sizes that aren't on the
+  type scale.
 
 ## Consistency (character lock)
 If a character or mascot appears, it is locked: the same shape, colors, proportions and features in

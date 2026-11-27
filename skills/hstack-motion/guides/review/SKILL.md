@@ -17,6 +17,9 @@ one before the composition's length (Remotion prints the length on an out-of-ran
       no kit example scene with swapped content; no sample-script line. Would this sheet be mistaken
       for another product's video? If yes, it fails.
 - [ ] Fills the frame: the subject is large, UI is cropped and scaled up, no shot mostly empty.
+- [ ] No line or shape crosses through text; no fake glyph parts; no half-faded type lingering.
+- [ ] Hyper: every frame works as a poster (field + subject + marks, scale contrast, composed layout);
+      see `guides/hyper/SKILL.md`, "Every frame is a poster".
 - [ ] Every element is inside the frame and nothing overlaps by accident (long text in bubbles wraps).
 - [ ] At most two lines of text on screen; every word readable at phone size.
 - [ ] The brand color is only fills on light backgrounds; contrast is fine.
